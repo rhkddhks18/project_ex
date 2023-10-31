@@ -1,11 +1,6 @@
 package org.example;
 
-import org.example.appService.AppService;
-import org.example.systemService.SystemService;
-
 public class App {
-    SystemService systemService = new SystemService();
-    AppService appService = new AppService();
 
     public void run() {
         System.out.println("== 대전시네마 ==");

@@ -1,4 +1,4 @@
-package org.example.entity;
+package org.example.movie.entity;
 
 public class Movie {
 
