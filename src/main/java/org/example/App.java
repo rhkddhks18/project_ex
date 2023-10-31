@@ -25,9 +25,10 @@ public class App {
 
             System.out.println("영화 예매\n로그인\n회원가입\n로그아웃\n종료");
             System.out.print("\n명령 ) ");
-            String command = sc.nextLine();
+            String command = sc.nextLine().trim();
             switch (command) {
                 case "영화 예매":
+                case "영화예매":
                     movieController.run();
                     break;
                 case "회원가입":

@@ -25,6 +25,7 @@ public class MovieController {
             movieList.add(new Movie(row));
         }
         List<String> movieNameList = new ArrayList<>();
+        System.out.println("예매하실 영화를 선택해주세요");
         for (Movie movie : movieList) {
             System.out.println(movie.getTitle());
             movieNameList.add(movie.getTitle());
