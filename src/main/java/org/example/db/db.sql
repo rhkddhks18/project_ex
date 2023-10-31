@@ -79,3 +79,22 @@ actor = "에단 호크, 사라 스누크, 노아 테일러 외",
 genre = "SF";
 
 SELECT * FROM `movie`;
+
+
+SELECT * FROM SCHEDULE ;
+
+
+INSERT INTO schedule
+set `time` = 1;
+
+INSERT INTO schedule
+set `time` = 3;
+
+INSERT INTO schedule
+set `time` = 5;
+
+INSERT INTO schedule
+set `time` = 7;
+
+INSERT INTO schedule
+set `time` = 9;

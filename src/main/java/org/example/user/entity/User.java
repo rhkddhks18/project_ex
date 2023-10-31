@@ -1,5 +1,11 @@
 package org.example.user.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+
 public class User {
     private int id;
     //유저고유번호
