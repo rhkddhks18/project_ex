@@ -2,9 +2,6 @@ package org.example.movie.controller;
 
 import org.example.Container;
 import org.example.movie.entity.Movie;
-
-import org.example.db.DBConnection;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

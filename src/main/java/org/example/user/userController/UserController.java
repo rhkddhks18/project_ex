@@ -31,7 +31,6 @@ public class UserController {
             } else {
                 System.out.println("이미 사용중인 아이디입니다. 다시 입력해주세요");
             }
-            ;
         }
 
         System.out.println("사용하실 비밀번호를 입력해주세요");
