@@ -19,11 +19,15 @@ public class App {
         Scanner sc = Container.getSc();
         MovieController movieController = new MovieController();
         UserController userController = new UserController();
-        System.out.println("== 대전시네마 ==\n");
 
         while (true) {
 
-            System.out.println("영화 예매\n로그인\n회원가입\n로그아웃\n종료");
+            System.out.println("\n== 대전시네마 ==\n");
+            if (Container.getLoginedUser() == null) {
+                System.out.println("영화 예매\n로그인\n회원가입\n종료");
+            } else {
+                System.out.println("영화 예매\n로그아웃\n종료");
+            }
             System.out.print("\n명령 ) ");
             String command = sc.nextLine().trim();
             switch (command) {

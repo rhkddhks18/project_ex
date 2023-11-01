@@ -12,6 +12,11 @@ import java.util.Scanner;
 
 public class MovieController {
     public void run() {
+
+        if (Container.getLoginedUser() == null){
+            System.out.println("로그인해야 예매할 수 있습니다");
+            return;
+        }
         FirstMovieController firstMovieController = new FirstMovieController();
         SecondMovieController secondMovieController = new SecondMovieController();
         ThirdMovieController thirdMovieController = new ThirdMovieController();

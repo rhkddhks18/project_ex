@@ -6,7 +6,7 @@ CREATE TABLE `user` (
 	user_id varchar(30) NOT NULL unique,
 	`password` varchar(30) NOT NULL,
 	name varchar(30) NOT NULL,
-	birth date NOT NULL,
+	birth varchar(30) NOT NULL,
 	email varchar(100) NOT NULL unique
 );
 

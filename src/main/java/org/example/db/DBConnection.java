@@ -149,7 +149,7 @@ public class DBConnection {
         return affectedRows;
     }
 
-    public int insert(String sql) {
+    public void insert(String sql) {
         int id = -1;
 
         try {
@@ -165,7 +165,6 @@ public class DBConnection {
             System.err.printf("[SQL 예외, SQL : %s] : %s\n", sql, e.getMessage());
         }
 
-        return id;
     }
 
     public void close() {
