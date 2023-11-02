@@ -2,14 +2,26 @@ package org.example.ticketing.entity;
 
 public class Seat {
     private int id;
-    //좌석 id
+    private String seatX;  // 행 (알파벳)
+    private String seatY;  // 열
+    private boolean reserved;
 
-    private int schedule_id;
-    //편성표 id
+    public Seat(int id, String seatX, String seatY, boolean reserved) {
+        this.id = id;
+        this.seatX = seatX;
+        this.seatY = seatY;
+        this.reserved = reserved;
+    }
 
-    private String seat_x;
-    //좌석 x
 
-    private String Seat_y;
-    //좌석 y
+    public boolean isReserved() {
+        return reserved;
+    }
+
+    public boolean reserve() {
+        reserved = true;
+
+        return this.reserved;
+    }
+
 }

@@ -2,11 +2,12 @@ package org.example.movie.controller;
 
 import org.example.Container;
 import org.example.review.reviewController.ReviewController;
+import org.example.ticketing.ticketingController.MovieReservationController;
 
 public class FirstMovieController {
     ReviewController reviewController = new ReviewController();
     MovieController movieController = new MovieController();
-//    TicketingController ticketingController = new TicketingController();
+    MovieReservationController movieReservationController = new MovieReservationController();
 
     public void run() {
         while (true) {
@@ -19,7 +20,7 @@ public class FirstMovieController {
                 case "돌아가기":
                     movieController.run();
                 case "예매하기":
-//                    ticketingController.run();
+                    movieReservationController.reservation();
                     break;
                 case "리뷰작성":
                     reviewController.write();

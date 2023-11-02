@@ -24,7 +24,7 @@ SELECT * FROM movie;
 
 CREATE TABLE schedule (
 	id int UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	time int NOT null
+	movie_time varchar(30) NOT NULL
 );
 
 SELECT * FROM schedule;
@@ -54,9 +54,6 @@ CREATE TABLE review (
 
 SELECT * FROM review;
 
-
-
-
 INSERT INTO `movie`
 set id =1,
 title = "인셉션",
@@ -82,21 +79,20 @@ genre = "SF";
 
 SELECT * FROM `movie`;
 
+INSERT INTO schedule
+set
+movie_time = "1:00 PM";
+
+INSERT INTO schedule
+set
+movie_time = "4:00 PM";
+
+INSERT INTO schedule
+set
+movie_time = "7:00 PM";
+
+INSERT INTO schedule
+set
+movie_time = "10:00 PM";
 
 SELECT * FROM SCHEDULE ;
-
-
-INSERT INTO schedule
-set `time` = 1;
-
-INSERT INTO schedule
-set `time` = 3;
-
-INSERT INTO schedule
-set `time` = 5;
-
-INSERT INTO schedule
-set `time` = 7;
-
-INSERT INTO schedule
-set `time` = 9;
