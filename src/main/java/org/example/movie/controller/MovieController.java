@@ -17,7 +17,6 @@ public class MovieController {
         FirstMovieController firstMovieController = new FirstMovieController();
         SecondMovieController secondMovieController = new SecondMovieController();
         ThirdMovieController thirdMovieController = new ThirdMovieController();
-        Scanner sc = Container.getSc();
 
         StringBuilder sb = new StringBuilder();
         sb.append(String.format("SELECT title FROM movie;"));
@@ -33,8 +32,8 @@ public class MovieController {
             movieNameList.add(movie.getTitle());
         }
         System.out.print("\n명령 ) ");
-        String command = sc.nextLine();
-//
+        String command = Container.getSc().nextLine();
+
         if (command.equals(movieNameList.get(0))) {
             firstMovieController.run();
         }
