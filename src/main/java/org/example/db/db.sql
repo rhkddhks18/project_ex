@@ -90,3 +90,124 @@ set
 movie_time = "10:00 PM";
 
 SELECT * FROM SCHEDULE ;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+SELECT title from MOVIE
+where id=1;
+
+use beginner_pro;
+
+SELECT * from `user`;
+SELECT * FROM MOVIE ;
+
+INSERT into `user`
+set user_id = 123,
+`password` = 123,
+name = "홍길동",
+BIRTH = "96.05.16",
+EMAIL = "123@123.123";
+
+drop table `user`;
+
+CREATE TABLE `user` (
+	id int UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	user_id varchar(30) NOT NULL unique,
+	`password` varchar(30) NOT NULL,
+	name varchar(30) NOT NULL,
+	birth varchar(30) NOT NULL,
+	email varchar(100) NOT NULL unique
+);
+
+SELECT *from MOVIE
+where id = 2;
+
+SELECT email from `user`
+where email = "123@123.123";
+
+
+CREATE TABLE schedule (
+	id int UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	movie_time varchar(30) NOT NULL
+);
+
+drop table SCHEDULE ;
+SELECT * from SCHEDULE;
+INSERT INTO schedule
+set
+movie_time = "1:00 PM";
+
+INSERT INTO schedule
+set
+movie_time = "4:00 PM";
+
+INSERT INTO schedule
+set
+movie_time = "7:00 PM";
+
+INSERT INTO schedule
+set
+movie_time = "10:00 PM";
+
+
+SELECT * from MOVIE;
+
+
+
+
+drop table MOVIE_RESERVATION ;
+
+create table movie_reservation(
+id int unsigned not null auto_increment primary key unique,
+user_id int unsigned not null,
+schedule_id int not null,
+seat_x int not null,
+seat_y int not null);
+
+
+SELECT * FROM MOVIE_RESERVATION;
