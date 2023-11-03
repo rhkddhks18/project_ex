@@ -1,6 +1,7 @@
 package org.example.ticketing.ticketingController;
 
 import org.example.Container;
+import org.example.ticketing.entity.Schedule;
 
 import java.util.Scanner;
 
@@ -11,8 +12,8 @@ public class MovieReservationController {
         SeatController seatController = new SeatController();
 
         while (true) {
-            scheduleController.choice();
-            seatController.seat();
+            Schedule selectedSchedule = scheduleController.choice();
+            seatController.seat(selectedSchedule);
 
             System.out.print("예매를 완료하려면 'Y', 취소하려면 'N'을 입력하세요: ");
             String choice = sc.nextLine();

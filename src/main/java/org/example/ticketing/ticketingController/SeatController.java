@@ -1,21 +1,26 @@
 package org.example.ticketing.ticketingController;
 
+import org.example.ticketing.entity.MovieReservation;
+import org.example.ticketing.entity.Schedule;
 import org.example.ticketing.entity.Seat;
-import org.example.ticketing.ticketingRepository.SeatRepository;
+import org.example.ticketing.ticketingRepository.MovieReservationRepository;
+import org.example.ticketing.ticketingService.MovieReservationService;
 
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 public class SeatController {
-    public void seat() {
-        Scanner sc = new Scanner(System.in);
-        int seat_x = 0;
-        int seat_y = 0;
-        boolean reserved = false;
-        int seatX = 7;   // 행 (알파벳)
-        int seatY = 10;  // 열
 
+    public void seat(Schedule time) {
+
+        Scanner sc = new Scanner(System.in);
+
+        MovieReservationService movieReservationService = new MovieReservationService();
+        int seatX = 7;
+        int seatY = 10;
         Seat[][] seats = new Seat[seatX][seatY];
+
         int seatId = 1;
         for (int i = 0; i < seatX; i++) {
             for (int j = 0; j < seatY; j++) {
@@ -25,6 +30,14 @@ public class SeatController {
                 seatId++;
             }
         }
+
+
+        List<MovieReservation> reservedSeat = movieReservationService.getReservatedSeat(time);
+        for (MovieReservation movieReservation : reservedSeat) {
+            seats[movieReservation.getSeat_x()][movieReservation.getSeat_y()].reserve();
+        }
+
+
 
         System.out.println("좌석 선택을 시작합니다.");
 
@@ -36,14 +49,14 @@ public class SeatController {
             String seatXChoice;
 
             try {
-                System.out.print("열 번호를 선택하세요 (1-" + seatY + ") 또는 '0'을 입력하여 종료: ");
-                seatYChoice = sc.nextInt();
+                System.out.print("좌석을 선택하세요 (1-" + seatY + ") 또는 '0'을 입력하여 종료: ");
+                seatYChoice = Integer.parseInt(sc.nextLine());
                 if (seatYChoice == 0) {
                     System.out.println("좌석 선택을 취소합니다.");
                     break;
                 }
-                System.out.print("행 번호를 선택하세요 (A-" + (char) ('A' + seatX - 1) + "): ");
-                seatXChoice = sc.next();
+                System.out.print("좌석을 선택하세요 (A-" + (char) ('A' + seatX - 1) + "): ");
+                seatXChoice = sc.nextLine();
 
                 if (seatYChoice < 1 || seatYChoice > seatY || seatXChoice.length() != 1 || seatXChoice.charAt(0) < 'A' || seatXChoice.charAt(0) > (char) ('A' + seatX - 1)) {
                     System.out.println("잘못된 좌석을 선택하셨습니다. 다시 선택하세요.");
@@ -55,15 +68,11 @@ public class SeatController {
                     continue;
                 }
 
-                reserved = seats[rowIndex][seatYChoice - 1].reserve();
+                seats[rowIndex][seatYChoice - 1].reserve();
                 displaySeat(seats);
-                System.out.printf("%s%d 좌석을 선택하셨습니다.\n", seatXChoice, seatYChoice);
-
-                seat_x = rowIndex;
-                seat_y = seatYChoice - 1;
-                SeatRepository.seat(seat_x, seat_y, reserved);
-
+                System.out.printf("%s 열 %d 번 좌석을 선택하셨습니다.\n", seatXChoice, seatYChoice);
                 break;
+
             } catch (InputMismatchException e) {
                 System.out.println("잘못된 입력입니다. 다시 입력하세요.");
                 sc.nextLine();
