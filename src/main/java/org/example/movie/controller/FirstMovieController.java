@@ -18,7 +18,7 @@ public class FirstMovieController {
             String command = Container.getSc().nextLine().trim();
             switch (command) {
                 case "돌아가기":
-                    movieController.run();
+                    return;
                 case "예매하기":
                     movieReservationController.reservation();
                     break;

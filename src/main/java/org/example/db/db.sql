@@ -10,8 +10,6 @@ CREATE TABLE `user` (
 	email varchar(100) NOT NULL unique
 );
 
-SELECT * FROM `user`;
-DROP table movie;
 CREATE TABLE movie (
 	id int UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	title varchar(100) NOT NULL,
@@ -20,14 +18,12 @@ CREATE TABLE movie (
 	genre varchar(30) NOT NULL
 );
 
-SELECT * FROM movie;
 
 CREATE TABLE schedule (
 	id int UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	movie_time varchar(30) NOT NULL
 );
 
-SELECT * FROM schedule;
 
 CREATE TABLE seat (
 	id int UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -35,14 +31,12 @@ CREATE TABLE seat (
 	seat_y varchar(3) NOT NULL
 );
 
-SELECT * FROM seat;
 
 CREATE TABLE movie_reservation (
 	id int UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	is_complete char(30) NOT NULL
 );
 
-SELECT * FROM movie_reservation;
 
 CREATE TABLE review (
 	id int UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -52,7 +46,6 @@ CREATE TABLE review (
 	regDate varchar(30) not null
 );
 
-SELECT * FROM review;
 
 INSERT INTO `movie`
 set id =1,
@@ -77,7 +70,6 @@ director = "피터 스피어리그, 마이클 스피어리그",
 actor = "에단 호크, 사라 스누크, 노아 테일러 외",
 genre = "SF";
 
-SELECT * FROM `movie`;
 
 INSERT INTO schedule
 set
@@ -94,5 +86,3 @@ movie_time = "7:00 PM";
 INSERT INTO schedule
 set
 movie_time = "10:00 PM";
-
-SELECT * FROM SCHEDULE ;

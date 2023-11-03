@@ -25,8 +25,7 @@ public class ScheduleRepository {
         List<Map<String, Object>> rows = dbConnection.selectRows(sb.toString());
 
         for (Map<String, Object> row : rows) {
-//            for문에서 rows의 각 인자값에 대한 선언부가 있다. 어디일까
-//            row에서 id, movie_time 값을 가져와 스케줄 객체의 생성자의 파라미터로 전달한다.
+
             int id = (int) row.get("id");
             String movieTime = (String) row.get("movie_time");
             schedules.add(new Schedule(id, movieTime));
