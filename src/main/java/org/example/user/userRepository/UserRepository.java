@@ -2,14 +2,11 @@ package org.example.user.userRepository;
 
 import org.example.Container;
 import org.example.user.entity.User;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class UserRepository {
-    public UserRepository() {
-    }
 
     public boolean checkIdList(String userId) {
         boolean canUseId = true;
@@ -60,5 +57,13 @@ public class UserRepository {
             }
         }
         return canLogin;
+    }
+
+    public boolean checkEmail(String email) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("SELECT * FROM `user` ");
+        sb.append(String.format("WHERE email = '%s';",email));
+        Map <String, Object> usedEmail = Container.getDBconnection().selectRow(sb.toString());
+        return new User(usedEmail).getEmail() == null;
     }
 }

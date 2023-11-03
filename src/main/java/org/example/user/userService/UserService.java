@@ -2,7 +2,6 @@ package org.example.user.userService;
 
 import org.example.Container;
 import org.example.user.userRepository.UserRepository;
-
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
@@ -28,10 +27,13 @@ public class UserService {
         return userRepository.login(id,pw);
     }
 
-
-
-
     public boolean emailCheck(String email) {
+        if (userRepository.checkEmail(email)){
+        }else {
+            System.out.println("이미 사용중인 이메일입니다. 다시 입력해주세요");
+            return false;
+        }
+
         Random random = new Random();
         final String username = "rhkddhks18@gmail.com";
         final String password = "witw mktv cccs fkee";

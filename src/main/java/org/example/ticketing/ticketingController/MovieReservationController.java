@@ -1,18 +1,21 @@
 package org.example.ticketing.ticketingController;
 
+import org.example.Container;
+
 import java.util.Scanner;
 
 public class MovieReservationController {
     public void reservation() {
-        Scanner sc = new Scanner(System.in);
+        Scanner sc = Container.getSc();
         ScheduleController scheduleController = new ScheduleController();
         SeatController seatController = new SeatController();
+
         while (true) {
             scheduleController.choice();
             seatController.seat();
 
             System.out.print("예매를 완료하려면 'Y', 취소하려면 'N'을 입력하세요: ");
-            String choice = sc.next();
+            String choice = sc.nextLine();
 
             if (choice.equalsIgnoreCase("Y")) {
                 System.out.println("예매가 완료되었습니다.");

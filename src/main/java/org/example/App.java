@@ -3,7 +3,6 @@ package org.example;
 import org.example.db.DBConnection;
 import org.example.movie.controller.MovieController;
 import org.example.user.userController.UserController;
-
 import java.util.Scanner;
 
 public class App {
@@ -28,7 +27,7 @@ public class App {
             } else {
                 System.out.println("영화 예매\n로그아웃\n종료");
             }
-            System.out.print("\n명령 ) ");
+            System.out.print("\n입력 ) ");
             String command = sc.nextLine().trim();
             switch (command) {
                 case "영화 예매":
@@ -44,10 +43,8 @@ public class App {
                 case "로그아웃":
                     userController.logout();
                     break;
-
                 case "종료":
                     return;
-
             }
         }
     }

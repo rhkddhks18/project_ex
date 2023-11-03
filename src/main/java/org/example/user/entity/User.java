@@ -26,6 +26,7 @@ public class User {
     //유저 생년월일
 
     private String email;
+    //유저 이메일
 
     public User(Map<String, Object> row) {
         this.id = (int) row.get("id");
@@ -35,7 +36,4 @@ public class User {
         this.birth = (String) row.get("birth");
         this.email = (String) row.get("email");
     }
-
-
-    //유저 이메일
 }

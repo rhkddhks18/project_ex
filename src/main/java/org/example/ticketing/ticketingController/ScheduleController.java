@@ -2,7 +2,6 @@ package org.example.ticketing.ticketingController;
 
 import org.example.ticketing.entity.Schedule;
 import org.example.ticketing.ticketingService.ScheduleService;
-
 import java.util.List;
 import java.util.Scanner;
 
