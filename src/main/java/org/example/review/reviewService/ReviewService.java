@@ -8,12 +8,15 @@ import java.util.List;
 public class ReviewService {
     ReviewRepository reviewRepository = new ReviewRepository();
 
-    public int create(int score, String writing, String user_id, String regDate) {
-        return this.reviewRepository.create(score, writing, user_id, regDate);
+    public int create(int score, String selectMovie, String writing, String user_id, String regDate) {
+        return this.reviewRepository.create(score, selectMovie, writing, user_id, regDate);
     }
 
     public List<Review> getReviewAllList() {
         return this.reviewRepository.getReviewAllList();
+    }
+    public void getReviewUserList() {
+        this.reviewRepository.getReviewUserList();
     }
 
     public void remove(Review review) {
@@ -25,4 +28,8 @@ public class ReviewService {
     public Review getReviewListById(int id) {
         return this.reviewRepository.getReviewListById(id);
     }
+    public Review getReviewUserListById() {
+        return this.reviewRepository.getReviewUserListById();
+    }
+
 }

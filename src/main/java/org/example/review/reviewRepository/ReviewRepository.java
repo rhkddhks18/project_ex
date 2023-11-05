@@ -15,10 +15,11 @@ public class ReviewRepository {
     public ReviewRepository () {
         dbConnection = Container.getDBconnection();
     }
-    public int create(int score, String writing, String user_id, String regDate) {
+    public int create(int score, String selectMovie, String writing, String user_id, String regDate) {
         StringBuilder sb = new StringBuilder();
         sb.append(String.format("INSERT INTO review "));
         sb.append(String.format("SET score = '%d', ", score));
+        sb.append(String.format("movieTitle = '%s', ", selectMovie));
         sb.append(String.format("writing = '%s', ", writing));
         sb.append(String.format("user_id = '%s' , ", user_id));
         sb.append(String.format("regDate = now(); "));
@@ -40,6 +41,18 @@ public class ReviewRepository {
             reviewList.add(new Review(row));
         }
         return reviewList;
+    }
+
+    public void getReviewUserList() {
+        List<Review> reviewList = getReviewAllList();
+
+        String user_id = Container.getLoginedUser().getUser_id();
+        for (int i = 0; i < reviewList.size(); i++) {
+            Review review = reviewList.get(i);
+            if (review.getUser_id().equals(user_id)) {
+                System.out.printf("%s, %s, %d, %s, %s\n", review.getUser_id(), review.getId(), review.getScore(), review.getWriting(), review.getRegDate());
+            }
+        }
     }
 
     public void remove(Review review) {
@@ -78,4 +91,15 @@ public class ReviewRepository {
 
         return review;
     }
+    public Review getReviewUserListById() {
+        List<Review> reviewList = getReviewAllList();
+        for (int i = 0; i < reviewList.size(); i++) {
+            Review review = reviewList.get(i);
+            if (review.getUser_id().equals(Container.getLoginedUser().getUser_id())) {
+                return review;
+            }
+        }
+        return null;
+    }
+
 }

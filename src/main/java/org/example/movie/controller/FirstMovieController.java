@@ -6,7 +6,6 @@ import org.example.ticketing.ticketingController.MovieReservationController;
 
 public class FirstMovieController {
     ReviewController reviewController = new ReviewController();
-    MovieController movieController = new MovieController();
     MovieReservationController movieReservationController = new MovieReservationController();
 
     public void run() {

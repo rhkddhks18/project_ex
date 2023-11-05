@@ -6,7 +6,6 @@ import org.example.ticketing.ticketingController.MovieReservationController;
 
 public class SecondMovieController {
     ReviewController reviewController = new ReviewController();
-    MovieController movieController = new MovieController();
     MovieReservationController movieReservationController = new MovieReservationController();
 
     public void run() {
@@ -18,7 +17,7 @@ public class SecondMovieController {
             String command = Container.getSc().nextLine().trim();
             switch (command) {
                 case "돌아가기":
-                    movieController.run();
+                    return;
                 case "예매하기":
                     movieReservationController.reservation();
                     break;
