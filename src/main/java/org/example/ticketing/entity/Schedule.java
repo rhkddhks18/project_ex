@@ -2,6 +2,7 @@ package org.example.ticketing.entity;
 
 public class Schedule {
     private int id;
+    private int movie_id;
     private String movieTime;
 
     public Schedule(int id, String movieTime) {

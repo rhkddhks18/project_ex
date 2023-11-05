@@ -19,9 +19,15 @@ public class ScheduleController {
         }
 
         while (true) {
-            System.out.print("영화 시간을 선택하세요 (1, 2, 3, 4): ");
+            System.out.println("영화 시간을 선택하세요 (1, 2, 3, 4) 취소하려면 취소를 입력해주세요");
+            System.out.print("입력 ) ");
             try {
-                int selectedTimeId = Integer.parseInt(sc.nextLine());
+                String command = sc.nextLine().trim();
+                if (command.equals("취소")){
+                    return null;
+                }
+
+                int selectedTimeId = Integer.parseInt(command);
                 Schedule selectedSchedule = null;
                 for (Schedule schedule : schedules) {
                     if (schedule.getId() == selectedTimeId) {

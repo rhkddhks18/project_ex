@@ -13,4 +13,8 @@ public class MovieReservationService {
     public List<MovieReservation> getReservatedSeat(Schedule time) {
          return movieReservationRepository.getReservatedSeat(time);
     }
+
+    public void reservation(MovieReservation reservedSeat) {
+        movieReservationRepository.reservation(reservedSeat);
+    }
 }

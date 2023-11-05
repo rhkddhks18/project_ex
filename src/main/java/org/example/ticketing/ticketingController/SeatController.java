@@ -1,9 +1,9 @@
 package org.example.ticketing.ticketingController;
 
+import org.example.Container;
 import org.example.ticketing.entity.MovieReservation;
 import org.example.ticketing.entity.Schedule;
 import org.example.ticketing.entity.Seat;
-import org.example.ticketing.ticketingRepository.MovieReservationRepository;
 import org.example.ticketing.ticketingService.MovieReservationService;
 
 import java.util.InputMismatchException;
@@ -12,8 +12,9 @@ import java.util.Scanner;
 
 public class SeatController {
 
-    public void seat(Schedule time) {
-
+    public MovieReservation seat(Schedule time) {
+        int seat_x = 0;
+        int seat_y = 0;
         Scanner sc = new Scanner(System.in);
 
         MovieReservationService movieReservationService = new MovieReservationService();
@@ -38,7 +39,6 @@ public class SeatController {
         }
 
 
-
         System.out.println("좌석 선택을 시작합니다.");
 
         while (true) {
@@ -53,7 +53,7 @@ public class SeatController {
                 seatYChoice = Integer.parseInt(sc.nextLine());
                 if (seatYChoice == 0) {
                     System.out.println("좌석 선택을 취소합니다.");
-                    break;
+                    return null;
                 }
                 System.out.print("좌석을 선택하세요 (A-" + (char) ('A' + seatX - 1) + "): ");
                 seatXChoice = sc.nextLine();
@@ -71,15 +71,20 @@ public class SeatController {
                 seats[rowIndex][seatYChoice - 1].reserve();
                 displaySeat(seats);
                 System.out.printf("%s 열 %d 번 좌석을 선택하셨습니다.\n", seatXChoice, seatYChoice);
-                break;
+
+                seat_x = rowIndex;
+                seat_y = seatYChoice - 1;
+
+                MovieReservation movieReservation = new MovieReservation(1, seat_x, seat_y, Container.getLoginedUser().getId(),time.getId());
+                return movieReservation;
 
             } catch (InputMismatchException e) {
                 System.out.println("잘못된 입력입니다. 다시 입력하세요.");
                 sc.nextLine();
             }
         }
-
     }
+
 
     public static void displaySeat(Seat[][] seats) {
         for (int i = 1; i <= seats[0].length; i++) {
