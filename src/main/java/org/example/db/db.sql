@@ -40,10 +40,11 @@ CREATE TABLE movie_reservation (
 
 CREATE TABLE review (
 	id int UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	movieTitle varchar(30) NOT NULL,
 	score int NOT NULL,
 	writing text NOT NULL,
 	user_id varchar(30) NOT NULL,
-	regDate varchar(30) not null
+	regDate varchar(30) NOT NULL
 );
 
 
