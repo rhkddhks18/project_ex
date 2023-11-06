@@ -1,5 +1,8 @@
 package org.example.ticketing.ticketingController;
 
+import org.example.movie.controller.MovieController;
+import org.example.ticketing.entity.MovieReservation;
+
 import java.util.Scanner;
 
 public class MovieReservationController {

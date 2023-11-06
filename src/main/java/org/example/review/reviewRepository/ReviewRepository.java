@@ -47,10 +47,11 @@ public class ReviewRepository {
         List<Review> reviewList = getReviewAllList();
 
         String user_id = Container.getLoginedUser().getUser_id();
+        System.out.println("게시물 번호 / 작성자 / 평점 / 리뷰 내용 / 영화 제목 / 작성일자");
         for (int i = 0; i < reviewList.size(); i++) {
             Review review = reviewList.get(i);
             if (review.getUser_id().equals(user_id)) {
-                System.out.printf("%s, %s, %d, %s, %s\n", review.getUser_id(), review.getId(), review.getScore(), review.getWriting(), review.getRegDate());
+                System.out.printf("%d, %s, %d, %s, %s, %s\n", review.getId(), review.getUser_id(), review.getScore(), review.getWriting(), review.getMovieTitle(), review.getRegDate());
             }
         }
     }

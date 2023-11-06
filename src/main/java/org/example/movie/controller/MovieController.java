@@ -7,35 +7,42 @@ import java.util.List;
 import java.util.Map;
 
 public class MovieController {
+
+
     public void run() {
 
         if (Container.getLoginedUser() == null){
             System.out.println("로그인해야 예매할 수 있습니다");
             return;
         }
-        FirstMovieController firstMovieController = new FirstMovieController();
-        SecondMovieController secondMovieController = new SecondMovieController();
-        ThirdMovieController thirdMovieController = new ThirdMovieController();
+        if (Container.getSelectedMovieTitle() != null) {
+            Container.setSelectedMovieTitle(null);
+        }
+        SelectedMovieController selectedMovieController = new SelectedMovieController();
 
         System.out.println("예매하실 영화를 선택해주세요");
-        List<String> movieNameList = getMovieTitle();
-
+        List<Movie> movieList = getMovieTitle();
+        List<String> movieNameList = new ArrayList<>();
+        for (Movie movie : movieList) {
+            System.out.println(movie.getTitle());
+            movieNameList.add(movie.getTitle());
+        }
         System.out.print("\n명령 ) ");
         String command = Container.getSc().nextLine();
-
+        selectedMovie(command);
         if (command.equals(movieNameList.get(0))) {
-            firstMovieController.run();
+            selectedMovieController.run();
         }
 
         if (command.equals(movieNameList.get(1))) {
-            secondMovieController.run();
+            selectedMovieController.run();
         }
 
         if (command.equals(movieNameList.get(2))) {
-            thirdMovieController.run();
+            selectedMovieController.run();
         }
     }
-    public List<String> getMovieTitle() {
+    public List<Movie> getMovieTitle() {
         StringBuilder sb = new StringBuilder();
         sb.append(String.format("SELECT title FROM movie;"));
         List<Movie> movieList = new ArrayList<>();
@@ -43,11 +50,17 @@ public class MovieController {
         for (Map<String, Object> row : rows) {
             movieList.add(new Movie(row));
         }
-        List<String> movieNameList = new ArrayList<>();
+        return movieList;
+    }
+    public boolean selectedMovie(String command) {
+        boolean isMovieSelected = false;
+        List<Movie> movieList = getMovieTitle();
         for (Movie movie : movieList) {
-            System.out.println(movie.getTitle());
-            movieNameList.add(movie.getTitle());
-        }
-        return movieNameList;
+            if (command.equals(movie.getTitle())) {
+                isMovieSelected = true;
+                Container.setSelectedMovieTitle(command);
+                break;
+            }
+        } return isMovieSelected;
     }
 }

@@ -1,5 +1,10 @@
 package org.example.movie.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class Schedule {
     private int id;
     //편성 번호
