@@ -20,43 +20,88 @@ public class ReviewController {
         System.out.println("리뷰작성 영화를 선택해주세요");
         movieController.getMovieTitle();
         String selectMovie = Container.getSc().nextLine().trim();
-        while (true) {
-        System.out.print("평점(1~5): ");
-            try {
-                score = Integer.parseInt(Container.getSc().nextLine());
-                if ((score < 1) || (score > 5)) {
-                    System.out.println("평점을 1~5사이의 점수로 등록해주세요.");
+
+            while (true) {
+                System.out.print("평점(1~5): ");
+                try {
+                    score = Integer.parseInt(Container.getSc().nextLine());
+                    if ((score < 1) || (score > 5)) {
+                        System.out.println("평점을 1~5사이의 점수로 등록해주세요.");
+                        continue;
+                    }
+                } catch (Exception e) {
+                    System.out.println("1에서 5 사이의 정수값을 입력해주세요.");
                     continue;
                 }
-            } catch (Exception e) {
-                System.out.println("1에서 5 사이의 정수값을 입력해주세요.");
-                continue;
+                break;
             }
-            break;
-        }
 
-        System.out.print("리뷰 내용: ");
-        String writing = Container.getSc().nextLine();
+            System.out.print("리뷰 내용: ");
+            String writing = Container.getSc().nextLine();
 
-        int id = reviewService.create(score, selectMovie, writing, Container.getLoginedUser().getUser_id(), Util.nowDateTime());
-        System.out.println(id + "번째 리뷰가 등록되었습니다.");
+            int id = reviewService.create(score, selectMovie, writing, Container.getLoginedUser().getUser_id(), Util.nowDateTime());
+            System.out.println(id + "번째 리뷰가 등록되었습니다.");
 
     }
 
     public void list() {
+//        List<String> movieNameList = movieController.getMovieTitle();
         List<Review> reviewList = reviewService.getReviewAllList();
-        if (reviewList.size() == 0) {
-            System.out.println("게시물이 없습니다.");
-        } else {
-            System.out.println("게시물 번호 / 영화제목 /작성자 / 평점 / 리뷰내용 / 작성일자");
-            for (int i = 0; i < reviewList.size(); i++) {
-                Review review = reviewList.get(i);
-                System.out.printf("%d / %s / %s / %d / %s / %s\n", review.getId(), review.getMovieTitle(), review.getUser_id(), review.getScore(), review.getWriting(), review.getRegDate());
+//        if (movieNameList.equals(movieController.getMovieTitle())) {
+//        }
+        while (true) {
+            System.out.println("열람하실 게시판을 선택해주세요");
+            System.out.println("전체게시판 / 인셉션 게시판 / 인터스텔라 게시판 / 타임 패러독스 게시판");
+            String reviewArticle = Container.getSc().nextLine().trim();
+            if (reviewArticle.equals("전체게시판")) {
+                if (reviewList.size() == 0) {
+                    System.out.println("게시물이 없습니다.");
+                } else {
+                    System.out.println("게시물 번호 / 영화제목 /작성자 / 평점 / 리뷰내용 / 작성일자");
+                    for (int i = 0; i < reviewList.size(); i++) {
+                        Review review = reviewList.get(i);
+                        System.out.printf("%d / %s / %s / %d / %s / %s\n", review.getId(), review.getMovieTitle(), review.getUser_id(), review.getScore(), review.getWriting(), review.getRegDate());
+                    } break;
+                }
+            } else if (reviewArticle.equals("인셉션 게시판")) {
+                if (reviewList.size() == 0) {
+                    System.out.println("게시물이 없습니다.");
+                } else {
+                    System.out.println("게시물 번호 / 영화제목 /작성자 / 평점 / 리뷰내용 / 작성일자");
+                    for (int i = 0; i < reviewList.size(); i++) {
+                        Review review = reviewList.get(i);
+                        if (review.getMovieTitle().equals("인셉션")) {
+                            System.out.printf("%d / %s / %s / %d / %s / %s\n", review.getId(), review.getMovieTitle(), review.getUser_id(), review.getScore(), review.getWriting(), review.getRegDate());
+                        }
+                    } break;
+                }
+            } else if (reviewArticle.equals("인터스텔라 게시판")) {
+                if (reviewList.size() == 0) {
+                    System.out.println("게시물이 없습니다.");
+                } else {
+                    System.out.println("게시물 번호 / 영화제목 /작성자 / 평점 / 리뷰내용 / 작성일자");
+                    for (int i = 0; i < reviewList.size(); i++) {
+                        Review review = reviewList.get(i);
+                        if (review.getMovieTitle().equals("인터스텔라")) {
+                            System.out.printf("%d / %s / %s / %d / %s / %s\n", review.getId(), review.getMovieTitle(), review.getUser_id(), review.getScore(), review.getWriting(), review.getRegDate());
+                        }
+                    } break;
+                }
+            } else if (reviewArticle.equals("타임 패러독스 게시판")) {
+                if (reviewList.size() == 0) {
+                    System.out.println("게시물이 없습니다.");
+                } else {
+                    System.out.println("게시물 번호 / 영화제목 /작성자 / 평점 / 리뷰내용 / 작성일자");
+                    for (int i = 0; i < reviewList.size(); i++) {
+                        Review review = reviewList.get(i);
+                        if (review.getMovieTitle().equals("타임 패러독스")) {
+                            System.out.printf("%d / %s / %s / %d / %s / %s\n", review.getId(), review.getMovieTitle(), review.getUser_id(), review.getScore(), review.getWriting(), review.getRegDate());
+                        }
+                    } break;
+                }
             }
         }
-
     }
-
     public void remove() {
         if (reviewService.getReviewUserListById() == null) {
             System.out.println("작성한 리뷰가 존재하지 않습니다.");

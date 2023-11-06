@@ -14,7 +14,7 @@ public class Review {
 
     private String user_id;
 
-    private  String movieTitle;
+    private String movieTitle;
 
     private int score;
 
