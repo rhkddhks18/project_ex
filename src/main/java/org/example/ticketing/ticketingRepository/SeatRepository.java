@@ -10,7 +10,14 @@ public class SeatRepository {
         dbConnection = Container.getDBconnection();
     }
 
-    public static void seat(int seatX, int seatY,boolean reserved) {
+    public int seat(int seat_x, int seat_y) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format("INSERT INTO seat "));
+        sb.append(String.format("SET seat_x = '%d', ", seat_x));
+        sb.append(String.format("seat_y = '%d'; ", seat_y));
 
+        int id = dbConnection.insert(sb.toString());
+
+        return id;
     }
 }

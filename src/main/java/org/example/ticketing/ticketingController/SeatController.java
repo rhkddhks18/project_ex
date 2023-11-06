@@ -1,28 +1,25 @@
 package org.example.ticketing.ticketingController;
 
+import org.example.Container;
 import org.example.ticketing.entity.Seat;
 import org.example.ticketing.ticketingRepository.SeatRepository;
+import org.example.ticketing.ticketingService.SeatService;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class SeatController {
+    SeatService seatService = new SeatService();
     public void seat() {
-        Scanner sc = new Scanner(System.in);
-        int seat_x = 0;
-        int seat_y = 0;
-        boolean reserved = false;
-        int seatX = 7;   // 행 (알파벳)
-        int seatY = 10;  // 열
 
-        Seat[][] seats = new Seat[seatX][seatY];
-        int seatId = 1;
-        for (int i = 0; i < seatX; i++) {
-            for (int j = 0; j < seatY; j++) {
-                String seatXList = String.valueOf((char) ('A' + i));
-                String seatYList = String.valueOf(j + 1);
-                seats[i][j] = new Seat(seatId, seatXList, seatYList, false);
-                seatId++;
+
+        int seatRow = 7;   // 행
+        int seatCol = 10;  // 열
+
+        char[][] seats = new char[seatRow][seatCol];
+        for (int i = 0; i < seatRow; i++) {
+            for (int j = 0; j < seatCol; j++) {
+                seats[i][j] = 'O';
             }
         }
 
@@ -32,47 +29,44 @@ public class SeatController {
             System.out.println("현재 좌석 상태:");
             displaySeat(seats);
 
-            int seatYChoice;
-            String seatXChoice;
+            int seat_y;
+            char seat_x = 0;
 
             try {
-                System.out.print("열 번호를 선택하세요 (1-" + seatY + ") 또는 '0'을 입력하여 종료: ");
-                seatYChoice = sc.nextInt();
-                if (seatYChoice == 0) {
+                System.out.print("열 번호를 선택하세요 (1-" + seatCol + ") 또는 '0'을 입력하여 종료: ");
+                seat_y = Container.getSc().nextInt();
+                if (seat_y == 0) {
                     System.out.println("좌석 선택을 취소합니다.");
                     break;
                 }
-                System.out.print("행 번호를 선택하세요 (A-" + (char) ('A' + seatX - 1) + "): ");
-                seatXChoice = sc.next();
 
-                if (seatYChoice < 1 || seatYChoice > seatY || seatXChoice.length() != 1 || seatXChoice.charAt(0) < 'A' || seatXChoice.charAt(0) > (char) ('A' + seatX - 1)) {
+                System.out.print("행 번호를 선택하세요 (A-" + (char) ('A' + seatRow - 1) + "): ");
+                seat_x = Container.getSc().next().charAt(0);
+
+                int id = seatService.seat(seat_x, seat_y);
+                if (seat_y < 1 || seat_y > seatCol || seat_x < 'A' || seat_x > (char) ('A' + seatRow - 1)) {
                     System.out.println("잘못된 좌석을 선택하셨습니다. 다시 선택하세요.");
                     continue;
                 }
-                int rowIndex = seatXChoice.charAt(0) - 'A';
-                if (seats[rowIndex][seatYChoice - 1].isReserved()) {
+
+                int rowIndex = seat_x - 'A';
+                if (seats[rowIndex][seat_y - 1] == 'X') {
                     System.out.println("이미 예매된 좌석입니다. 다른 좌석을 선택하세요.");
                     continue;
                 }
 
-                reserved = seats[rowIndex][seatYChoice - 1].reserve();
+                seats[rowIndex][seat_y - 1] = 'X';
                 displaySeat(seats);
-                System.out.printf("%s%d 좌석을 선택하셨습니다.\n", seatXChoice, seatYChoice);
-
-                seat_x = rowIndex;
-                seat_y = seatYChoice - 1;
-                SeatRepository.seat(seat_x, seat_y, reserved);
-
+                System.out.printf("%s%d 좌석이 예매되었습니다.", seat_x, seat_y);
                 break;
             } catch (InputMismatchException e) {
-                System.out.println("잘못된 입력입니다. 다시 입력하세요.");
-                sc.nextLine();
+                System.out.println("잘못된 입력입니다. 숫자 또는 알파벳을 다시 입력하세요.");
+                Container.getSc().nextLine();
             }
         }
-
     }
 
-    public static void displaySeat(Seat[][] seats) {
+    public static void displaySeat(char[][] seats) {
         for (int i = 1; i <= seats[0].length; i++) {
             System.out.printf("%4d", i);
         }
@@ -81,11 +75,11 @@ public class SeatController {
         for (int i = 0; i < seats.length; i++) {
             System.out.print((char) ('A' + i) + " ");
 
-            for (Seat seat : seats[i]) {
-                if (seat.isReserved()) {
-                    System.out.print("[X] ");
-                } else {
+            for (char c : seats[i]) {
+                if (c == 'O') {
                     System.out.print("[ ] ");
+                } else if (c == 'X') {
+                    System.out.print("[X] ");
                 }
             }
             System.out.println();
