@@ -18,7 +18,6 @@ public class ReviewService {
     public void getReviewUserList() {
         this.reviewRepository.getReviewUserList();
     }
-
     public void remove(Review review) {
         this.reviewRepository.remove(review);
     }
@@ -30,6 +29,9 @@ public class ReviewService {
     }
     public Review getReviewUserListById() {
         return this.reviewRepository.getReviewUserListById();
+    }
+    public int checkScore() {
+        return this.reviewRepository.checkScore();
     }
 
 }

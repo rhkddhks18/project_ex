@@ -103,4 +103,22 @@ public class ReviewRepository {
         return null;
     }
 
+    public int checkScore() {
+        int score;
+        while (true) {
+            System.out.print("평점(1~5): ");
+            try {
+                score = Integer.parseInt(Container.getSc().nextLine());
+                if ((score < 1) || (score > 5)) {
+                    System.out.println("평점을 1~5사이의 점수로 등록해주세요.");
+                    continue;
+                }
+            } catch (Exception e) {
+                System.out.println("1에서 5 사이의 정수값을 입력해주세요.");
+                continue;
+            }
+            break;
+        }
+        return score;
+    }
 }

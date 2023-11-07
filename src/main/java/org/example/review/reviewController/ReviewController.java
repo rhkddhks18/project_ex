@@ -17,28 +17,14 @@ public class ReviewController {
     MovieReservation movieReservation;
 
     public void write() {
-//        if (movieReservation.getIsComplete() == null) {
+//        if (movieReservation.getIsComplete() == false) {
 //            System.out.println("영화예약을 먼저 완료하고 이용해주세요.");
 //            return;
 //        }
-        int score;
+//        int score;
         System.out.println(Container.getSelectedMovieTitle() + " 리뷰작성");
 
-        while (true) {
-            System.out.print("평점(1~5): ");
-            try {
-                score = Integer.parseInt(Container.getSc().nextLine());
-                if ((score < 1) || (score > 5)) {
-                    System.out.println("평점을 1~5사이의 점수로 등록해주세요.");
-                    continue;
-                }
-            } catch (Exception e) {
-                System.out.println("1에서 5 사이의 정수값을 입력해주세요.");
-                continue;
-            }
-            break;
-        }
-
+        int score = reviewService.checkScore();
         System.out.print("리뷰 내용: ");
         String writing = Container.getSc().nextLine();
 
@@ -51,9 +37,9 @@ public class ReviewController {
 
         while (true) {
             System.out.println("열람하실 게시판을 선택해주세요");
-            System.out.println("전체게시판 / " + Container.getSelectedMovieTitle() + " 게시판 ");
+            System.out.println("1. 전체게시판 / " + "2. " + Container.getSelectedMovieTitle() + " 게시판 ");
             String reviewArticle = Container.getSc().nextLine().trim();
-            if (reviewArticle.equals("전체게시판")) {
+            if (reviewArticle.equals("전체게시판") || reviewArticle.equals("1")) {
                 if (reviewList.size() == 0) {
                     System.out.println("게시물이 없습니다.");
                 } else {
@@ -64,7 +50,7 @@ public class ReviewController {
                     }
                     break;
                 }
-            } else if (reviewArticle.equals(Container.getSelectedMovieTitle() + " 게시판")) {
+            } else if (reviewArticle.equals(Container.getSelectedMovieTitle() + " 게시판") || reviewArticle.equals("2")) {
                 if (reviewList.size() == 0) {
                     System.out.println("게시물이 없습니다.");
                 } else {
@@ -119,21 +105,8 @@ public class ReviewController {
                 System.out.println("다른 사용자의 게시물은 수정이 불가합니다.");
                 return;
             }
-            int score;
-            while (true) {
-                System.out.print("평점 수정: ");
-                try {
-                    score = Integer.parseInt(Container.getSc().nextLine());
-                    if ((score < 1) || (score > 5)) {
-                        System.out.println("평점을 1~5사이의 점수로 등록해주세요.");
-                        continue;
-                    }
-                } catch (Exception e) {
-                    System.out.println("1에서 5 사이의 정수값을 입력해주세요.");
-                    continue;
-                }
-                break;
-            }
+            int score = reviewService.checkScore();
+
             System.out.print("리뷰 수정: ");
             String writing = Container.getSc().nextLine();
 
