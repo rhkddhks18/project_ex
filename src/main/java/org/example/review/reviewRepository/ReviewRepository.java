@@ -3,7 +3,6 @@ package org.example.review.reviewRepository;
 import org.example.Container;
 import org.example.db.DBConnection;
 import org.example.review.entity.Review;
-import org.example.review.reviewService.ReviewService;
 import org.example.ticketing.entity.MovieReservation;
 
 import java.util.ArrayList;
@@ -21,7 +20,7 @@ public class ReviewRepository {
         StringBuilder sb = new StringBuilder();
         sb.append(String.format("INSERT INTO review "));
         sb.append(String.format("SET score = '%d', ", score));
-        sb.append(String.format("reservation_id = '%d', ", movieReservation.getId()));
+        sb.append(String.format("reservation_id = '%d', ", reservation_id));
         sb.append(String.format("writing = '%s', ", writing));
         sb.append(String.format("regDate = now(); "));
 
