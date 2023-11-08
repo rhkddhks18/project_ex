@@ -17,11 +17,11 @@ public class ReviewController {
     MovieReservation movieReservation;
 
     public void write() {
-//        if (movieReservation.getIsComplete() == false) {
-//            System.out.println("영화예약을 먼저 완료하고 이용해주세요.");
-//            return;
-//        }
-//        int score;
+        if (movieReservation.getId() == -1) {
+            System.out.println("영화예약을 먼저 완료하고 이용해주세요.");
+            return;
+        }
+
         System.out.println(Container.getSelectedMovieTitle() + " 리뷰작성");
 
         int score = reviewService.checkScore();
@@ -34,7 +34,7 @@ public class ReviewController {
 
     public void list() {
 //        List<Review> reviewList = reviewService.getReviewAllList();
-        List<Review> reviewTitleUserList = reviewService.getReviewTitleUserListById();
+        List<Review> reviewTitleUserList = reviewService.getReviewTitleUserList();
 
         while (true) {
             System.out.println("열람하실 게시판을 선택해주세요");
@@ -44,10 +44,10 @@ public class ReviewController {
                 if (reviewTitleUserList.size() == 0) {
                     System.out.println("게시물이 없습니다.");
                 } else {
-                    System.out.println("게시물 번호 / 영화제목 /작성자 / 평점 / 리뷰내용 / 작성일자");
+                    System.out.println("게시물 번호 / 영화제목 / 작성자 / 평점 / 리뷰내용 / 작성일자");
                     for (int i = 0; i < reviewTitleUserList.size(); i++) {
                         Review review = reviewTitleUserList.get(i);
-                        System.out.printf("%d / %s / %s / %d / %s / %s\n", review.getId(), review.getMovieTitle(), review.getUser_id(), review.getScore(), review.getWriting(), review.getRegDate());
+                        System.out.printf("%d / %s / %s / %d / %s / %s\n", review.getId(), review.getTitle(), review.getUser_id(), review.getScore(), review.getWriting(), review.getRegDate());
                     }
                     break;
                 }
@@ -58,8 +58,8 @@ public class ReviewController {
                     System.out.println("게시물 번호 / 영화제목 /작성자 / 평점 / 리뷰내용 / 작성일자");
                     for (int i = 0; i < reviewTitleUserList.size(); i++) {
                         Review review = reviewTitleUserList.get(i);
-                        if (Container.getSelectedMovieTitle().equals(review.getMovieTitle())) {
-                            System.out.printf("%d / %s / %s / %d / %s / %s\n", review.getId(), review.getMovieTitle(), review.getUser_id(), review.getScore(), review.getWriting(), review.getRegDate());
+                        if (Container.getSelectedMovieTitle().equals(review.getTitle())) {
+                            System.out.printf("%d / %s / %s / %d / %s / %s\n", review.getId(), review.getTitle(), review.getUser_id(), review.getScore(), review.getWriting(), review.getRegDate());
                         }
                     }
                     break;

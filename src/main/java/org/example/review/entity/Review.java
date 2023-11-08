@@ -12,9 +12,7 @@ import java.util.Map;
 public class Review {
     private int id;
 
-    private String user_id;
-
-    private String movieTitle;
+    private int reservation_id;
 
     private int score;
 
@@ -22,14 +20,16 @@ public class Review {
 
     private String regDate;
 
+    private String title;
+
+    private String user_id;
+
     public Review(Map<String, Object> row) {
         Object idObj = row.get("id");
         this.id = (idObj != null) ? (int) idObj : 0;
-        this.movieTitle = (String)row.get("movieTitle");
         Object scoreObj = row.get("score");
         this.score = (scoreObj != null) ? (int) scoreObj : 0;
         this.writing = (String)row.get("writing");
-        this.user_id = (String)row.get("user_id");
         this.regDate = (String)row.get("regDate");
     }
 }

@@ -42,7 +42,6 @@ public class ReviewRepository {
         }
         return reviewList;
     }
-
     public void getReviewUserList() {
         List<Review> reviewList = getReviewAllList();
 
@@ -51,7 +50,7 @@ public class ReviewRepository {
         for (int i = 0; i < reviewList.size(); i++) {
             Review review = reviewList.get(i);
             if (review.getUser_id().equals(user_id)) {
-                System.out.printf("%d, %s, %d, %s, %s, %s\n", review.getId(), review.getUser_id(), review.getScore(), review.getWriting(), review.getMovieTitle(), review.getRegDate());
+                System.out.printf("%d, %s, %d, %s, %s, %s\n", review.getId(), review.getUser_id(), review.getScore(), review.getWriting(), review.getTitle(), review.getRegDate());
             }
         }
     }
@@ -102,7 +101,7 @@ public class ReviewRepository {
         }
         return null;
     }
-    public List<Review> getReviewTitleUserListById() {
+    public List<Review> getReviewTitleUserList() {
         List<Review> reviewList = new ArrayList<>();
         StringBuilder sb = new StringBuilder();
 
