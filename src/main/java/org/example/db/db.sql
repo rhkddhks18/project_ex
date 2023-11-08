@@ -84,33 +84,11 @@ SELECT * FROM `movie`;
 SELECT * FROM SCHEDULE ;
 
 
-INSERT INTO schedule
-set
-movie_id = 0,
-movie_time = "1:00 PM";
-
-INSERT INTO schedule
-set
-movie_id = 0,
-movie_time = "4:00 PM";
-
-INSERT INTO schedule
-set
-movie_id = 0,
-movie_time = "7:00 PM";
-
-INSERT INTO schedule
-set
-movie_id = 0,
-movie_time = "10:00 PM";
-select * from schedule;
-
 select *
 from schedule
 join movie on schedule.movie_id = movie.id;
 
-INSERT INTO schedule (movie_id, movie_time)
-SELECT id, '1:00 PM' FROM movie WHERE id = 2;
+
 
 SELECT S.*
   FROM schedule AS S
@@ -124,11 +102,15 @@ select *
   from movie_reservation
  where schedule_id ;
 
- insert into movie_reservation(user_id, schedule_id, seat_x, seat_y)
- select '123', 7, 1, 6
 
 insert into schedule (movie_id, movie_time)
-VALUES(1, '4:00 PM'), (1, '7:00 PM'), (1, '10:00 PM')
+VALUES(1, '1:00 PM'), (1, '4:00 PM'), (1, '7:00 PM'), (1, '10:00 PM')
+
+insert into schedule (movie_id, movie_time)
+VALUES(2, '1:00 PM'), (2, '4:00 PM'), (2, '7:00 PM'), (2, '10:00 PM')
+
+insert into schedule (movie_id, movie_time)
+VALUES(3, '1:00 PM'), (3, '4:00 PM'), (3, '7:00 PM'), (3, '10:00 PM')
 
 insert into `user`
 set id = 1,
@@ -141,3 +123,5 @@ email = "rhkddhks18@gmail.com";
 select * from schedule where id = 1;
 
 select * from schedule;
+
+SELECT * FROM movie_reservation;
