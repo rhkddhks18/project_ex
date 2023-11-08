@@ -21,29 +21,24 @@ CREATE TABLE movie (
 
 CREATE TABLE schedule (
 	id int UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	movie_id INT UNSIGNED NOT NULL,
 	movie_time varchar(30) NOT NULL
 );
 
-
-CREATE TABLE seat (
-	id int UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	seat_x varchar(3) NOT NULL,
-	seat_y varchar(3) NOT NULL
-);
-
-
 CREATE TABLE movie_reservation (
 	id int UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	is_complete char(30) NOT NULL
+	user_id INT UNSIGNED NOT NULL,
+	schedule_id INT UNSIGNED NOT NULL,
+	seat_x varchar(3) NOT NULL,
+	seat_y varchar(3) NOT NULL,
 );
 
 
 CREATE TABLE review (
 	id int UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	movieTitle varchar(30) NOT NULL,
+	reservation_id int UNSIGNED NOT NULL,
 	score int NOT NULL,
 	writing text NOT NULL,
-	user_id varchar(30) NOT NULL,
 	regDate varchar(30) NOT NULL
 );
 
@@ -87,3 +82,13 @@ movie_time = "7:00 PM";
 INSERT INTO schedule
 set
 movie_time = "10:00 PM";
+
+
+select review.reservation_id, movie.title, `user`.user_id
+from review
+left join movie_reservation
+on review.reservation_id = movie_reservation.id
+left join movie
+on review.reservation_id = movie.id
+left join `user`
+on review.reservation_id = `user`.id;
