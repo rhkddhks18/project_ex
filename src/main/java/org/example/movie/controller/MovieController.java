@@ -7,7 +7,7 @@ import java.util.*;
 
 public class MovieController {
     public int movie_id = 0;
-
+    public int schedule_id = 0;
     public void run() {
 
         if (Container.getLoginedUser() == null) {
@@ -16,15 +16,13 @@ public class MovieController {
         }
         FirstMovieController firstMovieController = new FirstMovieController();
 
+        List<Movie> movieList = new ArrayList<>();
         StringBuilder sb = new StringBuilder();
         sb.append(String.format("SELECT id, title FROM movie;"));
-        List<Movie> movieList = new ArrayList<>();
         List<Map<String, Object>> rows = Container.getDBconnection().selectRows(sb.toString());
         for (Map<String, Object> row : rows) {
             movieList.add(new Movie(row));
         }
-
-
 
         System.out.println("예매하실 영화를 선택해주세요");
         for (Movie movie : movieList) {
@@ -44,7 +42,7 @@ public class MovieController {
             return;
         }
 
-        firstMovieController.run(movie_id);
+        firstMovieController.run(schedule_id, movie_id);
     }
 
 }

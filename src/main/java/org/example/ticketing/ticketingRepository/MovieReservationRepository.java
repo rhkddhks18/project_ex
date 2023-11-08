@@ -4,7 +4,10 @@ import org.example.Container;
 import org.example.db.DBConnection;
 import org.example.movie.entity.Movie;
 import org.example.ticketing.entity.MovieReservation;
+import org.example.ticketing.entity.Schedule;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class MovieReservationRepository {
@@ -27,10 +30,15 @@ public class MovieReservationRepository {
 
         return id;
     }
-    public MovieReservation getMovie(int schedule_id){
-        String selectQuery = "select * from schedule where id = " + schedule_id;
+    public List<MovieReservation> getMovieReservation(int schedule_id){
+        List<MovieReservation> movieReservations = new ArrayList<>();
+        StringBuilder sb = new StringBuilder();
+        sb.append("select * from movie_reservation where schedule_id = ").append(schedule_id);
 
-        Map<String, Object> reservData = Container.getDBconnection().selectRow(selectQuery);
-        return new MovieReservation(reservData);
+        List<Map<String, Object>> rows = dbConnection.selectRows(sb.toString());
+        for (Map<String, Object> row : rows) {
+            movieReservations.add(new MovieReservation(row));
+        }
+        return movieReservations;
     }
 }

@@ -7,7 +7,8 @@ import org.example.ticketing.entity.Schedule;
 import java.util.Scanner;
 
 public class MovieReservationController {
-    public void reservation(int movie_id) {
+
+    public void reservation(int schedule_id, int movie_id) {
         ScheduleController scheduleController = new ScheduleController();
         MovieSeat movieSeat = new MovieSeat();
         while (true) {
@@ -17,7 +18,7 @@ public class MovieReservationController {
                 System.out.println("편성표 선택이 잘못 됐습니다.");
                 break;
             }
-            MovieReservation reservData =  movieSeat.seat();
+            MovieReservation reservData =  movieSeat.seat(schedule_id);
             reservData.setSchedule_id(scheduleData.getId());
 
 
@@ -39,9 +40,6 @@ public class MovieReservationController {
             }
 //            실패
 //            else{
-
-
-
         }
     }
 }

@@ -7,14 +7,12 @@ import org.example.ticketing.entity.Schedule;
 import org.example.ticketing.ticketingService.MovieReservationService;
 
 import java.util.InputMismatchException;
+import java.util.List;
 
 public class MovieSeat {
-    MovieReservationService movieReservationService = new MovieReservationService();
 
-    public MovieReservation seat() {
+    public MovieReservation seat(int schedule_id){
 
-        int user_id = 0;
-        int schedule_id = 0;
         int seatRow = 7;   // 행
         int seatCol = 10;  // 열
 
@@ -28,12 +26,13 @@ public class MovieSeat {
         System.out.println("좌석 선택을 시작합니다.");
 
         while (true) {
+            MovieReservationService movieReservationService = new MovieReservationService();
+            List<MovieReservation> movieReservations = movieReservationService.getMovieReservation(schedule_id);
             System.out.println("현재 좌석 상태:");
             displaySeat(seats);
 
             int seat_y;
             char seat_x = 0;
-            MovieReservation reserv = movieReservationService.getMovie(schedule_id);
             try {
                 System.out.print("열 번호를 선택하세요 (1-" + seatCol + ") 또는 '0'을 입력하여 종료: ");
                 seat_y = Container.getSc().nextInt();
@@ -45,7 +44,7 @@ public class MovieSeat {
                 System.out.print("행 번호를 선택하세요 (A-" + (char) ('A' + seatRow - 1) + "): ");
                 seat_x = Container.getSc().next().charAt(0);
 
-                int id = movieReservationService.seat(user_id, schedule_id,seat_x, seat_y);
+                movieReservationService.seat(Container.getLoginedUser().getId(), schedule_id, seat_x, seat_y);
                 if (seat_y < 1 || seat_y > seatCol || seat_x < 'A' || seat_x > (char) ('A' + seatRow - 1)) {
                     System.out.println("잘못된 좌석을 선택하셨습니다. 다시 선택하세요.");
                     continue;
@@ -60,7 +59,7 @@ public class MovieSeat {
                 seats[rowIndex][seat_y - 1] = 'X';
                 displaySeat(seats);
                 System.out.printf("%s%d 좌석이 선택되었습니다.\n", seat_x, seat_y);
-                MovieReservation reservData = new MovieReservation(user_id, schedule_id, seat_x, seat_y);
+                MovieReservation reservData = new MovieReservation(Container.getLoginedUser().getId(), schedule_id, seat_x, seat_y);
                 reservData.setUser_id();
                 reservData.setSeat_x();
                 return reservData;
@@ -72,7 +71,7 @@ public class MovieSeat {
         return null;
     }
 
-    public static void displaySeat(char[][] seats) {
+    public void displaySeat(char[][] seats) {
         for (int i = 1; i <= seats[0].length; i++) {
             System.out.printf("%4d", i);
         }

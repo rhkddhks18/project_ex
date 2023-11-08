@@ -16,7 +16,11 @@ public class Movie {
 
     public Movie (Map<String, Object> row) {
          this.id = (int) row.get("id");
-         this.title = (String) row.get("title");
+        this.title = (String) row.get("title");
+        this.director = (String) row.get("director");
+        this.actor = (String) row.get("actor");
+        this.genre = (String) row.get("genre");
+
     }
 
 }

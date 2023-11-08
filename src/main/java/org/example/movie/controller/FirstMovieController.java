@@ -5,6 +5,7 @@ import org.example.movie.entity.Movie;
 import org.example.movie.movieService.MovieService;
 import org.example.review.reviewController.ReviewController;
 import org.example.ticketing.ticketingController.MovieReservationController;
+import org.example.ticketing.ticketingService.MovieReservationService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,13 +16,15 @@ public class FirstMovieController {
     MovieController movieController = new MovieController();
     MovieReservationController movieReservationController = new MovieReservationController();
     MovieService movieService = new MovieService();
-    public void run(int movie_id) {
+
+    public void run(int schedule_id, int movie_id) {
         while (true) {
             System.out.println("-".repeat(30));
 
            Movie movieData = movieService.getMovie(movie_id);
 
             System.out.println("== " + movieData.getTitle() + " ==");
+            System.out.printf("감독 : %s \n배우 : %s \n장르 : %s\n\n", movieData.getDirector(), movieData.getActor(), movieData.getGenre());
             System.out.println("예매하기\n리뷰작성\n리뷰게시판\n리뷰삭제\n리뷰수정\n돌아가기");
             System.out.println("-".repeat(30));
             String command = Container.getSc().nextLine().trim();
@@ -29,7 +32,7 @@ public class FirstMovieController {
                 case "돌아가기":
                     return;
                 case "예매하기":
-                    movieReservationController.reservation(movie_id);
+                    movieReservationController.reservation(schedule_id, movie_id);
                     break;
                 case "리뷰작성":
                     reviewController.write();

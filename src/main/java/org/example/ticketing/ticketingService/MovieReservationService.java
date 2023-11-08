@@ -4,6 +4,8 @@ import org.example.movie.entity.Movie;
 import org.example.ticketing.entity.MovieReservation;
 import org.example.ticketing.ticketingRepository.MovieReservationRepository;
 
+import java.util.List;
+
 public class MovieReservationService {
     MovieReservationRepository movieReservationRepository = new MovieReservationRepository();
 
@@ -11,7 +13,7 @@ public class MovieReservationService {
         return this.movieReservationRepository.seat(user_id,schedule_id,seat_x, seat_y);
     }
 
-    public MovieReservation getMovie(int schedule_id) {
-        return movieReservationRepository.getMovie(schedule_id);
+    public List<MovieReservation> getMovieReservation(int schedule_id) {
+        return movieReservationRepository.getMovieReservation(schedule_id);
     }
 }

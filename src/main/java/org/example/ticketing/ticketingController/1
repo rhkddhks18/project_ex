@@ -13,5 +13,3 @@ select *
 4. MovieReservationController 에서 3번에서 전달 받은 MovieReservation class를 바탕으로 movie_reservation 테이블에 Insert 한다.
    insert 결과가 정상이라면 뒷 코드를 실행 한다.
    -> 4번의 적용 코드라인은 20줄 근처
-
-
