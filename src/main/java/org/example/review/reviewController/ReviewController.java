@@ -28,35 +28,36 @@ public class ReviewController {
         System.out.print("리뷰 내용: ");
         String writing = Container.getSc().nextLine();
 
-        int id = reviewService.create(score, Container.getSelectedMovieTitle(), writing, Container.getLoginedUser().getUser_id(), Util.nowDateTime());
+        int id = reviewService.create(score, movieReservation.getId(), writing, Util.nowDateTime());
         System.out.println(id + "번째 리뷰가 등록되었습니다.");
     }
 
     public void list() {
-        List<Review> reviewList = reviewService.getReviewAllList();
+//        List<Review> reviewList = reviewService.getReviewAllList();
+        List<Review> reviewTitleUserList = reviewService.getReviewTitleUserListById();
 
         while (true) {
             System.out.println("열람하실 게시판을 선택해주세요");
             System.out.println("1. 전체게시판 / " + "2. " + Container.getSelectedMovieTitle() + " 게시판 ");
             String reviewArticle = Container.getSc().nextLine().trim();
             if (reviewArticle.equals("전체게시판") || reviewArticle.equals("1")) {
-                if (reviewList.size() == 0) {
+                if (reviewTitleUserList.size() == 0) {
                     System.out.println("게시물이 없습니다.");
                 } else {
                     System.out.println("게시물 번호 / 영화제목 /작성자 / 평점 / 리뷰내용 / 작성일자");
-                    for (int i = 0; i < reviewList.size(); i++) {
-                        Review review = reviewList.get(i);
+                    for (int i = 0; i < reviewTitleUserList.size(); i++) {
+                        Review review = reviewTitleUserList.get(i);
                         System.out.printf("%d / %s / %s / %d / %s / %s\n", review.getId(), review.getMovieTitle(), review.getUser_id(), review.getScore(), review.getWriting(), review.getRegDate());
                     }
                     break;
                 }
             } else if (reviewArticle.equals(Container.getSelectedMovieTitle() + " 게시판") || reviewArticle.equals("2")) {
-                if (reviewList.size() == 0) {
+                if (reviewTitleUserList.size() == 0) {
                     System.out.println("게시물이 없습니다.");
                 } else {
                     System.out.println("게시물 번호 / 영화제목 /작성자 / 평점 / 리뷰내용 / 작성일자");
-                    for (int i = 0; i < reviewList.size(); i++) {
-                        Review review = reviewList.get(i);
+                    for (int i = 0; i < reviewTitleUserList.size(); i++) {
+                        Review review = reviewTitleUserList.get(i);
                         if (Container.getSelectedMovieTitle().equals(review.getMovieTitle())) {
                             System.out.printf("%d / %s / %s / %d / %s / %s\n", review.getId(), review.getMovieTitle(), review.getUser_id(), review.getScore(), review.getWriting(), review.getRegDate());
                         }

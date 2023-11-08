@@ -4,6 +4,7 @@ import org.example.Container;
 import org.example.db.DBConnection;
 import org.example.review.entity.Review;
 import org.example.review.reviewService.ReviewService;
+import org.example.ticketing.entity.MovieReservation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,17 +12,17 @@ import java.util.Map;
 
 public class ReviewRepository {
     private DBConnection dbConnection;
+    MovieReservation movieReservation;
 
     public ReviewRepository () {
         dbConnection = Container.getDBconnection();
     }
-    public int create(int score, String selectMovie, String writing, String user_id, String regDate) {
+    public int create(int score, int reservation_id, String writing, String regDate) {
         StringBuilder sb = new StringBuilder();
         sb.append(String.format("INSERT INTO review "));
         sb.append(String.format("SET score = '%d', ", score));
-        sb.append(String.format("movieTitle = '%s', ", selectMovie));
+        sb.append(String.format("reservation_id = '%d', ", movieReservation.getId()));
         sb.append(String.format("writing = '%s', ", writing));
-        sb.append(String.format("user_id = '%s' , ", user_id));
         sb.append(String.format("regDate = now(); "));
 
         int id = dbConnection.insert(sb.toString());
@@ -101,6 +102,27 @@ public class ReviewRepository {
             }
         }
         return null;
+    }
+    public List<Review> getReviewTitleUserListById() {
+        List<Review> reviewList = new ArrayList<>();
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(String.format("SELECT review.* , "));
+        sb.append(String.format("movie.title, `user`.user_id "));
+        sb.append(String.format("from review "));
+        sb.append(String.format("left join movie_reservation "));
+        sb.append(String.format("on review.reservation_id = movie_reservation.id "));
+        sb.append(String.format("left join movie "));
+        sb.append(String.format("on review.reservation_id = movie.id "));
+        sb.append(String.format("left join `user` "));
+        sb.append(String.format("on review.reservation_id = `user`.id; "));
+
+        List<Map<String, Object>> rows = dbConnection.selectRows(sb.toString());
+
+        for (Map<String, Object> row : rows) {
+            reviewList.add(new Review(row));
+        }
+        return reviewList;
     }
 
     public int checkScore() {
