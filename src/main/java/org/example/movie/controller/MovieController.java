@@ -3,41 +3,44 @@ package org.example.movie.controller;
 import org.example.Container;
 import org.example.movie.entity.Movie;
 import org.example.movie.service.MovieService;
-import java.util.ArrayList;
-import java.util.List;
+import org.example.review.reviewController.ReviewController;
+import org.example.ticketing.ticketingController.MovieReservationController;
 
 public class MovieController {
+    ReviewController reviewController = new ReviewController();
+    MovieReservationController movieReservationController = new MovieReservationController();
+    MovieService movieService = new MovieService();
     public void run() {
 
-        if (Container.getLoginedUser() == null) {
-            System.out.println("로그인해야 예매할 수 있습니다");
-            return;
-        }
-        FirstMovieController firstMovieController = new FirstMovieController();
-        SecondMovieController secondMovieController = new SecondMovieController();
-        ThirdMovieController thirdMovieController = new ThirdMovieController();
-        MovieService movieService = new MovieService();
+        while (true) {
+            System.out.println("-".repeat(30));
+            System.out.printf("== %s == \n", Container.getSelectedMovie().getTitle());
+            System.out.printf("감독 : %s \n배우 : %s \n장르 : %s\n\n", Container.getSelectedMovie().getDirector(), Container.getSelectedMovie().getActor(), Container.getSelectedMovie().getGenre());
+            System.out.println("예매하기\n리뷰작성\n리뷰게시판\n리뷰삭제\n리뷰수정\n돌아가기");
+            System.out.println("-".repeat(30));
+            System.out.print("입력 ) ");
+            String command = Container.getSc().nextLine().trim();
 
-        List<Movie> movieList = movieService.getMovies();
-        List<String> movieNameList = new ArrayList<>();
-        System.out.println("예매하실 영화를 선택해주세요");
-        for (Movie movie : movieList) {
-            System.out.println(movie.getTitle());
-            movieNameList.add(movie.getTitle());
-        }
-        System.out.print("\n입력 ) ");
-        String command = Container.getSc().nextLine();
-
-        if (command.equals(movieNameList.get(0))) {
-            firstMovieController.run();
-        }
-
-        if (command.equals(movieNameList.get(1))) {
-            secondMovieController.run();
-        }
-
-        if (command.equals(movieNameList.get(2))) {
-            thirdMovieController.run();
+            switch (command) {
+                case "돌아가기":
+                    return;
+                case "예매하기":
+                    movieReservationController.reservation();
+                    break;
+                case "리뷰작성":
+                    reviewController.write();
+                    break;
+                case "리뷰게시판":
+                    reviewController.list();
+                    break;
+                case "리뷰삭제":
+                    reviewController.remove();
+                    break;
+                case "리뷰수정":
+                    reviewController.modify();
+                    break;
+            }
         }
     }
+
 }

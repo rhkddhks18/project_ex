@@ -75,7 +75,7 @@ public class SeatController {
                 seat_x = rowIndex;
                 seat_y = seatYChoice - 1;
 
-                MovieReservation movieReservation = new MovieReservation(1, seat_x, seat_y, Container.getLoginedUser().getId(),time.getId());
+                MovieReservation movieReservation = new MovieReservation(1, seat_x, seat_y, Container.getLoginedUser().getId(),time.getId(),Container.getSelectedMovie().getId());
                 return movieReservation;
 
             } catch (InputMismatchException e) {

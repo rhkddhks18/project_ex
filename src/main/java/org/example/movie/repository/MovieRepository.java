@@ -10,7 +10,7 @@ import java.util.Map;
 public class MovieRepository {
     public List<Movie> getMovies() {
         StringBuilder sb = new StringBuilder();
-        sb.append(String.format("SELECT title FROM movie;"));
+        sb.append(String.format("SELECT * FROM movie;"));
         List<Movie> movieList = new ArrayList<>();
         List<Map<String, Object>> rows = Container.getDBconnection().selectRows(sb.toString());
         for (Map<String, Object> row : rows) {

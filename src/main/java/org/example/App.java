@@ -1,7 +1,7 @@
 package org.example;
 
 import org.example.db.DBConnection;
-import org.example.movie.controller.MovieController;
+import org.example.movie.controller.SelectMovieController;
 import org.example.user.userController.UserController;
 import java.util.Scanner;
 
@@ -16,7 +16,7 @@ public class App {
 
     public void run() {
         Scanner sc = Container.getSc();
-        MovieController movieController = new MovieController();
+        SelectMovieController movieController = new SelectMovieController();
         UserController userController = new UserController();
 
         while (true) {

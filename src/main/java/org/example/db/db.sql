@@ -32,6 +32,7 @@ CREATE TABLE schedule (
 CREATE TABLE movie_reservation (
 	id int unsigned not null auto_increment primary key unique,
     user_id int unsigned not null,
+    movie_id int unsigned not null,
     schedule_id int not null,
     seat_x int not null,
     seat_y int not null);
@@ -40,10 +41,11 @@ CREATE TABLE movie_reservation (
 
 CREATE TABLE review (
 	id int UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	user_id int NOT NULL,
+	movie_id int not null,
 	score int NOT NULL,
 	writing text NOT NULL,
-	user_id varchar(30) NOT NULL,
-	regDate varchar(30) not null
+	regDate varchar(50) not null
 );
 
 

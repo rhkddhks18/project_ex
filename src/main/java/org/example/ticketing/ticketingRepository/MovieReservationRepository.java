@@ -23,7 +23,7 @@ public class MovieReservationRepository {
 
     public List<MovieReservation> getReservatedSeat(Schedule time) {
         StringBuilder sb = new StringBuilder();
-        sb.append(String.format("SELECT * FROM MOVIE_RESERVATION WHERE schedule_id = '%s'", time.getId()));
+        sb.append(String.format("SELECT * FROM MOVIE_RESERVATION WHERE schedule_id = '%s' AND movie_id = '%s';", time.getId(), Container.getSelectedMovie().getId()));
         List<MovieReservation> reservationList = new ArrayList<>();
         List<Map<String, Object>> users = Container.getDBconnection().selectRows(sb.toString());
         for (Map<String, Object> row : users) {
@@ -38,7 +38,8 @@ public class MovieReservationRepository {
         sb.append(String.format("SET user_id = '%s',", reservedSeat.getUser_id()));
         sb.append(String.format("seat_y = '%s',", reservedSeat.getSeat_y()));
         sb.append(String.format("seat_x = '%s',", reservedSeat.getSeat_x()));
-        sb.append(String.format("schedule_id = '%s';", reservedSeat.getSchedule_id()));
+        sb.append(String.format("schedule_id = '%s',", reservedSeat.getSchedule_id()));
+        sb.append(String.format("movie_id = '%s';", Container.getSelectedMovie().getId()));
 
         Container.getDBconnection().insert(sb.toString());
     }
