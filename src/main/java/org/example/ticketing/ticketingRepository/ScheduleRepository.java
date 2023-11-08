@@ -15,20 +15,21 @@ public class ScheduleRepository {
     }
 
 
-    public List<Schedule> getAllSchedules() {
+    public List<Schedule> getAllSchedules(int movie_id) {
         List<Schedule> schedules = new ArrayList<>();
 
         StringBuilder sb = new StringBuilder();
 
-        sb.append("SELECT * FROM schedule");
+        sb.append("SELECT * FROM schedule WHERE movie_id = ").append(movie_id);
 
         List<Map<String, Object>> rows = dbConnection.selectRows(sb.toString());
 
         for (Map<String, Object> row : rows) {
 
             int id = (int) row.get("id");
+            int movieId = (int) row.get("movie_id");
             String movieTime = (String) row.get("movie_time");
-            schedules.add(new Schedule(id, movieTime));
+            schedules.add(new Schedule(id, movieId, movieTime));
         }
         return schedules;
     }

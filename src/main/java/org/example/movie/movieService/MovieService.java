@@ -1,19 +1,12 @@
 package org.example.movie.movieService;
 
 import org.example.movie.entity.Movie;
-import org.example.movie.repository.MovieRepository;
-
-import java.util.List;
+import org.example.movie.movieRepository.MovieRepository;
 
 public class MovieService {
-
     MovieRepository movieRepository = new MovieRepository();
 
-    public List<Movie> getMovies() {
-        return movieRepository.getMovies();
-    }
-
-    public Movie getMovie(String number) {
-        return movieRepository.getMovie(number);
+    public Movie getMovie(int movie_id) {
+        return movieRepository.getMovie(movie_id);
     }
 }
