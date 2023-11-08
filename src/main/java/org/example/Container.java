@@ -3,6 +3,7 @@ package org.example;
 import lombok.Getter;
 import lombok.Setter;
 import org.example.db.DBConnection;
+import org.example.movie.entity.Movie;
 import org.example.user.entity.User;
 
 import java.util.Scanner;
@@ -13,6 +14,9 @@ public class Container {
     @Getter
     @Setter
     private static User loginedUser;
+    @Getter
+    @Setter
+    private static Movie selectedMovie;
 
     public static void init() {
         sc = new Scanner(System.in);

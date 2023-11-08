@@ -35,10 +35,10 @@ public class FirstMovieController {
                     movieReservationController.reservation(movie_id);
                     break;
                 case "리뷰작성":
-                    reviewController.write();
+                    reviewController.write(movie_id);
                     break;
                 case "리뷰게시판":
-                    reviewController.list();
+                    reviewController.list(movie_id);
                     break;
                 case "리뷰삭제":
                     reviewController.remove();

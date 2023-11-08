@@ -2,8 +2,9 @@ package org.example.review.reviewRepository;
 
 import org.example.Container;
 import org.example.db.DBConnection;
+import org.example.movie.movieService.MovieService;
 import org.example.review.entity.Review;
-import org.example.review.reviewService.ReviewService;
+import org.example.ticketing.entity.MovieReservation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,16 +12,20 @@ import java.util.Map;
 
 public class ReviewRepository {
     private DBConnection dbConnection;
+    MovieService movieService = new MovieService();
+
 
     public ReviewRepository () {
         dbConnection = Container.getDBconnection();
     }
-    public int create(int score, String writing, String user_id, String regDate) {
+    public int create(int score, int user_id, int movie_id, String writing, String regDate) {
         StringBuilder sb = new StringBuilder();
+
         sb.append(String.format("INSERT INTO review "));
         sb.append(String.format("SET score = '%d', ", score));
-        sb.append(String.format("writing = '%s', ", writing));
         sb.append(String.format("user_id = '%s' , ", user_id));
+        sb.append(String.format("movie_id = '%s' , ", movie_id));
+        sb.append(String.format("writing = '%s', ", writing));
         sb.append(String.format("regDate = now(); "));
 
         int id = dbConnection.insert(sb.toString());
@@ -40,6 +45,18 @@ public class ReviewRepository {
             reviewList.add(new Review(row));
         }
         return reviewList;
+    }
+    public void getReviewUserList() {
+        List<Review> reviewList = getReviewAllList();
+
+        int user_id = Container.getLoginedUser().getId();
+        System.out.println("게시물 번호 / 작성자 / 평점 / 리뷰 내용 / 영화 제목 / 작성일자");
+        for (int i = 0; i < reviewList.size(); i++) {
+            Review review = reviewList.get(i);
+            if (user_id == review.getUser_id()) {
+                System.out.printf("%d / %s / %d / %s / %s / %s\n", review.getId(), review.getUser_id(), review.getScore(), review.getWriting(), review.getMovie_id(), review.getRegDate());
+            }
+        }
     }
 
     public void remove(Review review) {
@@ -77,5 +94,55 @@ public class ReviewRepository {
         Review review = new Review(row);
 
         return review;
+    }
+    public Review getReviewUserListById() {
+        List<Review> reviewList = getReviewAllList();
+        for (int i = 0; i < reviewList.size(); i++) {
+            Review review = reviewList.get(i);
+            if (review.getUser_id() == Container.getLoginedUser().getId()) {
+                return review;
+            }
+        }
+        return null;
+    }
+//    public List<Review> getReviewTitleUserList() {
+//        List<Review> reviewList = new ArrayList<>();
+//        StringBuilder sb = new StringBuilder();
+//
+//        sb.append(String.format("SELECT review.* , "));
+//        sb.append(String.format("movie.title, `user`.user_id "));
+//        sb.append(String.format("from review "));
+//        sb.append(String.format("left join movie_reservation "));
+//        sb.append(String.format("on review.reservation_id = movie_reservation.id "));
+//        sb.append(String.format("left join movie "));
+//        sb.append(String.format("on review.reservation_id = movie.id "));
+//        sb.append(String.format("left join `user` "));
+//        sb.append(String.format("on review.reservation_id = `user`.id; "));
+//
+//        List<Map<String, Object>> rows = dbConnection.selectRows(sb.toString());
+//
+//        for (Map<String, Object> row : rows) {
+//            reviewList.add(new Review(row));
+//        }
+//        return reviewList;
+//    }
+
+    public int checkScore() {
+        int score;
+        while (true) {
+            System.out.print("평점(1~5): ");
+            try {
+                score = Integer.parseInt(Container.getSc().nextLine());
+                if ((score < 1) || (score > 5)) {
+                    System.out.println("평점을 1~5사이의 점수로 등록해주세요.");
+                    continue;
+                }
+            } catch (Exception e) {
+                System.out.println("1에서 5 사이의 정수값을 입력해주세요.");
+                continue;
+            }
+            break;
+        }
+        return score;
     }
 }
