@@ -29,10 +29,22 @@ public class MovieReservation {
         this.seat_y = seat_y;
     }
 
-
-    public void setUser_id() {
+    public MovieReservation(int id, int user_id, int schedule_id, int seat_x, int seat_y) {
+        this.id = id;
+        this.user_id = user_id;
+        this.schedule_id = schedule_id;
+        this.seat_x = seat_x;
+        this.seat_y = seat_y;
     }
 
+    
+
     public void setSeat_x() {
+    }
+
+    public void setSchedule_id() {
+    }
+
+    public void setSeat_y() {
     }
 }

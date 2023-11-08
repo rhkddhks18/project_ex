@@ -18,7 +18,7 @@ public class MovieReservationRepository {
         dbConnection = Container.getDBconnection();
     }
 
-    public int seat(int user_id, int schedule_id, int seat_x, int seat_y) {
+    public int insertSeat(int user_id, int schedule_id, int seat_x, int seat_y) {
         StringBuilder sb = new StringBuilder();
         sb.append(String.format("INSERT INTO movie_reservation "));
         sb.append(String.format("SET user_id = '%d', ", user_id));
@@ -26,9 +26,9 @@ public class MovieReservationRepository {
         sb.append(String.format("seat_x = '%d', ", seat_x));
         sb.append(String.format("seat_y = '%d'; ", seat_y));
 
-        int id = dbConnection.insert(sb.toString());
+        int cnt = dbConnection.insert(sb.toString());
 
-        return id;
+        return cnt;
     }
     public List<MovieReservation> getMovieReservation(int schedule_id){
         List<MovieReservation> movieReservations = new ArrayList<>();
@@ -40,5 +40,15 @@ public class MovieReservationRepository {
             movieReservations.add(new MovieReservation(row));
         }
         return movieReservations;
+    }
+
+    public int deleteSeat(int id) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format("DELETE FROM movie_reservation "));
+        sb.append(String.format("WHERE id = '%d' ", id));
+
+        int cnt = dbConnection.delete(sb.toString());
+
+        return cnt;
     }
 }

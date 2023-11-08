@@ -15,26 +15,29 @@ public class ScheduleController {
 
         List<Schedule> schedules = scheduleService.getAllSchedules(movie_id);
 
-
+        int cnt = 1;
         for (Schedule schedule : schedules) {
-            System.out.println(schedule.getMovieTime());
+            System.out.println((cnt++) + ". " + schedule.getMovieTime());
         }
 
         while (true) {
-            System.out.print("영화 시간을 입력하세요: ");
-            String selectedTime = Container.getSc().nextLine().trim();
+            String info = "영화 시간을 입력하세요: (";
 
-            Schedule selectedSchedule = null;
-
-            for (Schedule schedule : schedules) {
-                if (schedule.getMovieTime().equals(selectedTime)) {
-                    selectedSchedule = schedule;
-                    break;
-                }
+            for(int i = 1; i <= schedules.size(); i++){
+                if(i == schedules.size())
+                    info += i;
+                else
+                    info += i + ", ";
             }
-            if (selectedSchedule != null) {
 
-                System.out.println(selectedTime + "을 선택 하셨습니다. ");
+            System.out.print(info + ") : ");
+
+            int selectedTime = Container.getSc().nextInt();;
+
+            Schedule selectedSchedule = schedules.get(selectedTime - 1);
+
+            if (selectedSchedule != null) {
+                System.out.println(selectedSchedule.getMovieTime() + "을 선택 하셨습니다. ");
                 return selectedSchedule;
             } else {
                 System.out.println("올바른 선택이 아닙니다.");

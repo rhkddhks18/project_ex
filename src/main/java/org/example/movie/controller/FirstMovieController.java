@@ -17,7 +17,7 @@ public class FirstMovieController {
     MovieReservationController movieReservationController = new MovieReservationController();
     MovieService movieService = new MovieService();
 
-    public void run(int schedule_id, int movie_id) {
+    public void run(int movie_id) {
         while (true) {
             System.out.println("-".repeat(30));
 
@@ -32,7 +32,7 @@ public class FirstMovieController {
                 case "돌아가기":
                     return;
                 case "예매하기":
-                    movieReservationController.reservation(schedule_id, movie_id);
+                    movieReservationController.reservation(movie_id);
                     break;
                 case "리뷰작성":
                     reviewController.write();

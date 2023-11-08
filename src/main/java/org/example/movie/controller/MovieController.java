@@ -7,7 +7,7 @@ import java.util.*;
 
 public class MovieController {
     public int movie_id = 0;
-    public int schedule_id = 0;
+
     public void run() {
 
         if (Container.getLoginedUser() == null) {
@@ -42,7 +42,7 @@ public class MovieController {
             return;
         }
 
-        firstMovieController.run(schedule_id, movie_id);
+        firstMovieController.run(movie_id);
     }
 
 }
