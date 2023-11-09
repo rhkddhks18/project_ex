@@ -3,7 +3,6 @@ package org.example.ticketing.ticketingRepository;
 import org.example.Container;
 import org.example.ticketing.entity.MovieReservation;
 import org.example.ticketing.entity.Schedule;
-import org.example.user.entity.User;
 
 import java.util.ArrayList;
 import java.util.List;

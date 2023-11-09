@@ -1,7 +1,6 @@
 package org.example.movie.controller;
 
 import org.example.Container;
-import org.example.movie.entity.Movie;
 import org.example.movie.service.MovieService;
 import org.example.review.reviewController.ReviewController;
 import org.example.ticketing.ticketingController.MovieReservationController;
@@ -9,7 +8,6 @@ import org.example.ticketing.ticketingController.MovieReservationController;
 public class MovieController {
     ReviewController reviewController = new ReviewController();
     MovieReservationController movieReservationController = new MovieReservationController();
-    MovieService movieService = new MovieService();
     public void run() {
 
         while (true) {

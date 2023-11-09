@@ -45,7 +45,7 @@ public class ReviewController {
             System.out.println("게시물 번호 / 작성자 / 평점 / 리뷰내용 / 작성일자");
             for (int i = 0; i < reviewList.size(); i++) {
                 UserReview review = reviewList.get(i);
-                System.out.printf("%d / %s / %d / %s / %s\n", review.getId(), review.getUser_id(), review.getScore(), review.getWriting(), review.getRegDate());
+                System.out.printf("%d / %s / %d / %s / %s\n", review.getId(), review.getUser_name(), review.getScore(), review.getWriting(), review.getRegDate());
             }
         }
 
@@ -63,7 +63,7 @@ public class ReviewController {
             System.out.println("게시물 번호 / 작성자 / 평점 / 리뷰내용 / 작성일자");
             for (int i = 0; i < thisUserReviewList.size(); i++) {
                 UserReview review = thisUserReviewList.get(i);
-                System.out.printf("%d / %s / %d / %s / %s\n", review.getId(), review.getUser_id(), review.getScore(), review.getWriting(), review.getRegDate());
+                System.out.printf("%d / %s / %d / %s / %s\n", review.getId(), review.getUser_name(), review.getScore(), review.getWriting(), review.getRegDate());
             }
         }
 
@@ -94,7 +94,7 @@ public class ReviewController {
             System.out.println("게시물 번호 / 작성자 / 평점 / 리뷰내용 / 작성일자");
             for (int i = 0; i < thisUserReviewList.size(); i++) {
                 UserReview review = thisUserReviewList.get(i);
-                System.out.printf("%d / %s / %d / %s / %s\n", review.getId(), review.getUser_id(), review.getScore(), review.getWriting(), review.getRegDate());
+                System.out.printf("%d / %s / %d / %s / %s\n", review.getId(), review.getUser_name(), review.getScore(), review.getWriting(), review.getRegDate());
             }
         }
 

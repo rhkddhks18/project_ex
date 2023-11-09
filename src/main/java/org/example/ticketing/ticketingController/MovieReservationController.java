@@ -26,6 +26,7 @@ public class MovieReservationController {
             }
 
             System.out.print("예매를 완료하려면 'Y', 취소하려면 'N'을 입력하세요: ");
+            System.out.print("입력 ) ");
             String choice = sc.nextLine();
 
             if (choice.equalsIgnoreCase("Y")) {
