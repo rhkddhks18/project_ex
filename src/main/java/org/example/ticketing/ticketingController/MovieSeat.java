@@ -36,6 +36,8 @@ public class MovieSeat {
             try {
                 System.out.print("열 번호를 선택하세요 (1-" + seatCol + ") 또는 '0'을 입력하여 종료: ");
                 seat_y = Container.getSc().nextInt();
+                Container.getSc().nextLine();
+
                 if (seat_y == 0) {
                     System.out.println("좌석 선택을 취소합니다.");
                     break;
@@ -43,6 +45,7 @@ public class MovieSeat {
 
                 System.out.print("행 번호를 선택하세요 (A-" + (char) ('A' + seatRow - 1) + "): ");
                 seat_x = Container.getSc().next().charAt(0);
+                Container.getSc().nextLine();
 
                 if (seat_y < 1 || seat_y > seatCol || seat_x < 'A' || seat_x > (char) ('A' + seatRow - 1)) {
                     System.out.println("잘못된 좌석을 선택하셨습니다. 다시 선택하세요.");
@@ -56,11 +59,7 @@ public class MovieSeat {
 
                 int id = movieReservationService.insertSeat(Container.getLoginedUser().getId(), schedule_id, seat_x, seat_y);
 
-                if(id > 0)
-                    return id;
-                else
-                    return 0;
-
+                return id;
 
             } catch (InputMismatchException e) {
                 System.out.println("잘못된 입력입니다. 숫자 또는 알파벳을 다시 입력하세요.");
