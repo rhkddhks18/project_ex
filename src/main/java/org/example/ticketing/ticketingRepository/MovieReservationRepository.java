@@ -18,7 +18,7 @@ public class MovieReservationRepository {
 //        sb.append(String.format("seat_x = '%s',", seatX));
 //
 //        Container.getDBconnection().insert(sb.toString());
-//    }1123123123dd
+//    }1123123123dd123g
 
     public List<MovieReservation> getReservatedSeat(Schedule time) {
         StringBuilder sb = new StringBuilder();
