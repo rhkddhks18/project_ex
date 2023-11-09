@@ -103,29 +103,13 @@ public class ReviewRepository {
 
         return review;
     }
-    public UserReview getReviewUserListById() {
-        List<UserReview> reviewUserList = getReviewUserList();
-        for (int i = 0; i < reviewUserList.size(); i++) {
-            UserReview userReview = reviewUserList.get(i);
-            if (userReview.getName().equals(Container.getLoginedUser().getUser_id())) {
-                return userReview;
-            }
-        }
-        return null;
-    }
-    public boolean isReserved(int movie_id) {
+    public boolean isReserved() {
         StringBuilder sb = new StringBuilder();
 
-        sb.append(String.format("SELECT R.* "));
-        sb.append(String.format("FROM review AS R "));
-        sb.append(String.format("INNER JOIN movie_reservation AS M "));
-        sb.append(String.format("ON M.user_id = R.user_id " ));
-        sb.append(String.format("INNER JOIN schedule AS S "));
-        sb.append(String.format("ON M.schedule_id = S.id "));
-        sb.append(String.format("WHERE M.user_id = '%d' AND M.schedule_id = '%d' " , Container.getLoginedUser().getId(), movieService.getMovie(movie_id).getId()));
+        sb.append(String.format("SELECT * "));
+        sb.append(String.format("FROM movie_reservation "));
+        sb.append(String.format("WHERE user_id = '%d' ;", Container.getLoginedUser().getId()));
 
-        System.out.println(Container.getLoginedUser().getId());
-        System.out.println(movieService.getMovie(movie_id).getId());
         List<MovieReservation> reservationList = new ArrayList<>();
 
         List<Map<String, Object>> rows = dbConnection.selectRows(sb.toString());

@@ -14,9 +14,6 @@ public class Container {
     @Getter
     @Setter
     private static User loginedUser;
-    @Getter
-    @Setter
-    private static Movie selectedMovie;
 
     public static void init() {
         sc = new Scanner(System.in);

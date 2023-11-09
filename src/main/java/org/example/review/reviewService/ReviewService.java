@@ -28,11 +28,8 @@ public class ReviewService {
     public Review getReviewListById(int id) {
         return this.reviewRepository.getReviewListById(id);
     }
-    public UserReview getReviewUserListById() {
-        return this.reviewRepository.getReviewUserListById();
-    }
-    public boolean isReserved(int movie_id) {
-        return this.reviewRepository.isReserved(movie_id);
+    public boolean isReserved() {
+        return this.reviewRepository.isReserved();
     }
 
     public int checkScore() {
