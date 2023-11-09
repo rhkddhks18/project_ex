@@ -12,9 +12,8 @@ import java.util.Map;
 public class Review {
     private int id;
     //리뷰 id(고유번호)
-    private int user_id;
+    private int reservation_id;
     //유저 아이디
-    private int movie_id;
     //영화
     private int score;
     //평점
@@ -26,8 +25,7 @@ public class Review {
         this.id = (int)row.get("id");
         this.score = (int) row.get("score");
         this.writing = (String) row.get("writing");
-        this.user_id = (int)row.get("user_id");
+        this.reservation_id = (int)row.get("user_id");
         this.regDate = (String)row.get("regDate");
-        this.movie_id = (int)row.get("movie_id");
     }
 }

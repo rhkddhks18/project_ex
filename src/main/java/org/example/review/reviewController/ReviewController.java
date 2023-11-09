@@ -16,19 +16,20 @@ public class ReviewController {
     MovieReservation movieReservation;
     MovieService movieService = new MovieService();
 
-    public void write(int movie_id) {
-//        if (movieReservation.getId() == -1) {
-//            System.out.println("영화예약을 먼저 완료하고 이용해주세요.");
-//            return;
-//        }
+    public void write(int reservation_id) {
 
-        System.out.println(movieService.getMovie(movie_id).getTitle() + " 리뷰작성");
+        if (reviewService.isReserved(reservation_id) == false) {
+            System.out.println("예매를 완료 후 이용해주세요");
+            return;
+        }
+
+        System.out.println(movieService.getMovie(reservation_id).getTitle() + " 리뷰작성");
 
         int score = reviewService.checkScore();
         System.out.print("리뷰 내용: ");
         String writing = Container.getSc().nextLine();
 
-        int id = reviewService.create(score, Container.getLoginedUser().getId(), movieService.getMovie(movie_id).getId(), writing, Util.nowDateTime());
+        int id = reviewService.create(score,reservation_id , writing, Util.nowDateTime());
         System.out.println(id + "번째 리뷰가 등록되었습니다.");
     }
 
@@ -37,34 +38,20 @@ public class ReviewController {
 //        List<Review> reviewTitleUserList = reviewService.getReviewTitleUserList();
 
         while (true) {
-            System.out.println("열람하실 게시판을 선택해주세요");
-            System.out.println("1. 전체게시판 / " + "2. " + movieService.getMovie(movie_id).getTitle() + " 게시판 ");
-            String reviewArticle = Container.getSc().nextLine().trim();
-            if (reviewArticle.equals("전체게시판") || reviewArticle.equals("1")) {
+            System.out.println(movieService.getMovie(movie_id).getTitle() + " 게시판");
                 if (reviewList.size() == 0) {
                     System.out.println("게시물이 없습니다.");
-                } else {
-                    System.out.println("게시물 번호 / 영화제목 / 작성자 / 평점 / 리뷰내용 / 작성일자");
-                    for (int i = 0; i < reviewList.size(); i++) {
-                        Review review = reviewList.get(i);
-                        System.out.printf("%d / %s / %s / %d / %s / %s\n", review.getId(), movieService.getMovie(movie_id).getTitle(), Container.getLoginedUser().getUser_id(), review.getScore(), review.getWriting(), review.getRegDate());
-                    }
                     break;
-                }
-            } else if (reviewArticle.equals(movieService.getMovie(movie_id).getTitle() + " 게시판") || reviewArticle.equals("2")) {
-                if (reviewList.size() == 0) {
-                    System.out.println("게시물이 없습니다.");
                 } else {
-                    System.out.println("게시물 번호 / 영화제목 /작성자 / 평점 / 리뷰내용 / 작성일자");
+                    System.out.println("게시물 번호 / 작성자 / 평점 / 리뷰내용 / 작성일자");
                     for (int i = 0; i < reviewList.size(); i++) {
                         Review review = reviewList.get(i);
                         if (movie_id == review.getMovie_id()) {
-                            System.out.printf("%d / %s / %d / %s / %s\n", review.getId(), Container.getLoginedUser().getUser_id(), review.getScore(), review.getWriting(), review.getRegDate());
+                            System.out.printf("%d / %s / %d / %s / %s\n", review.getId(), review.getUser_id(), review.getScore(), review.getWriting(), review.getRegDate());
                         }
                     }
                     break;
                 }
-            }
         }
     }
 
@@ -80,11 +67,12 @@ public class ReviewController {
             if (review.getId() == 0) {
                 System.out.printf("%d번 리뷰내용이 존재하지 않습니다.\n", id);
                 return;
-            } else if (Container.getLoginedUser().getUser_id().equals(review.getUser_id()) == false) {
+            } else if (Container.getLoginedUser().getId()!= review.getUser_id()) {
                 System.out.println("다른 사용자의 게시물은 삭제가 불가합니다.");
                 return;
-            }
+            } else {
             System.out.printf("%d번 리뷰내용이 삭제 되었습니다.\n", id);
+            }
             this.reviewService.remove(review);
 
         }
@@ -102,7 +90,7 @@ public class ReviewController {
             if (review.getId() == 0) {
                 System.out.printf("%d번 리뷰내용이 존재하지 않습니다.\n", id);
                 return;
-            } else if (Container.getLoginedUser().getUser_id().equals(review.getUser_id()) == false) {
+            } else if (Container.getLoginedUser().getId() != review.getUser_id() ) {
                 System.out.println("다른 사용자의 게시물은 수정이 불가합니다.");
                 return;
             }

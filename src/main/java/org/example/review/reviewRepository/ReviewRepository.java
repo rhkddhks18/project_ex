@@ -18,13 +18,12 @@ public class ReviewRepository {
     public ReviewRepository () {
         dbConnection = Container.getDBconnection();
     }
-    public int create(int score, int user_id, int movie_id, String writing, String regDate) {
+    public int create(int score, int reservation_id, String writing, String regDate) {
         StringBuilder sb = new StringBuilder();
 
         sb.append(String.format("INSERT INTO review "));
         sb.append(String.format("SET score = '%d', ", score));
-        sb.append(String.format("user_id = '%s' , ", user_id));
-        sb.append(String.format("movie_id = '%s' , ", movie_id));
+        sb.append(String.format("reservation_id = '%s' , ", reservation_id));
         sb.append(String.format("writing = '%s', ", writing));
         sb.append(String.format("regDate = now(); "));
 
@@ -37,7 +36,10 @@ public class ReviewRepository {
         List<Review> reviewList = new ArrayList<>();
         StringBuilder sb = new StringBuilder();
 
-        sb.append(String.format("SELECT * FROM review"));
+        sb.append(String.format("SELECT * "));
+        sb.append(String.format("FROM review "));
+        sb.append(String.format("INNER JOIN movie_reservation "));
+        sb.append(String.format("ON movie_reservation.id = review.reservation_id;"));
 
         List<Map<String, Object>> rows = dbConnection.selectRows(sb.toString());
 
@@ -105,27 +107,35 @@ public class ReviewRepository {
         }
         return null;
     }
-//    public List<Review> getReviewTitleUserList() {
-//        List<Review> reviewList = new ArrayList<>();
-//        StringBuilder sb = new StringBuilder();
-//
-//        sb.append(String.format("SELECT review.* , "));
-//        sb.append(String.format("movie.title, `user`.user_id "));
-//        sb.append(String.format("from review "));
-//        sb.append(String.format("left join movie_reservation "));
-//        sb.append(String.format("on review.reservation_id = movie_reservation.id "));
-//        sb.append(String.format("left join movie "));
-//        sb.append(String.format("on review.reservation_id = movie.id "));
-//        sb.append(String.format("left join `user` "));
-//        sb.append(String.format("on review.reservation_id = `user`.id; "));
-//
-//        List<Map<String, Object>> rows = dbConnection.selectRows(sb.toString());
-//
-//        for (Map<String, Object> row : rows) {
-//            reviewList.add(new Review(row));
-//        }
-//        return reviewList;
-//    }
+    public boolean isReserved(int movie_id) {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(String.format("SELECT R.* "));
+        sb.append(String.format("FROM review AS R "));
+        sb.append(String.format("INNER JOIN movie_reservation AS M "));
+        sb.append(String.format("ON M.user_id = R.user_id " ));
+        sb.append(String.format("INNER JOIN schedule AS S "));
+        sb.append(String.format("ON M.schedule_id = S.id "));
+        sb.append(String.format("WHERE M.user_id = '%d' AND M.schedule_id = '%d' " , Container.getLoginedUser().getId(), movieService.getMovie(movie_id).getId()));
+
+        System.out.println(Container.getLoginedUser().getId());
+        System.out.println(movieService.getMovie(movie_id).getId());
+        List<MovieReservation> reservationList = new ArrayList<>();
+
+        List<Map<String, Object>> rows = dbConnection.selectRows(sb.toString());
+
+        for (Map<String, Object> row : rows) {
+            reservationList.add(new MovieReservation(row));
+        }
+
+
+        if(reservationList.size() != 0){
+            return true;
+        }else {
+            return false;
+        }
+}
+
 
     public int checkScore() {
         int score;
