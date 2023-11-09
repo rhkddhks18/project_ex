@@ -1,6 +1,7 @@
 package org.example.review.reviewService;
 
 import org.example.review.entity.Review;
+import org.example.review.entity.UserReview;
 import org.example.review.reviewRepository.ReviewRepository;
 
 import java.util.List;
@@ -8,14 +9,16 @@ import java.util.List;
 public class ReviewService {
     ReviewRepository reviewRepository = new ReviewRepository();
 
-    public int create(int score, String writing, String user_id, String regDate) {
-        return this.reviewRepository.create(score, writing, user_id, regDate);
+    public int create(int score, int reservation_id, String movie_id, String writing, String regDate) {
+        return this.reviewRepository.create(score, reservation_id, movie_id, writing, regDate);
     }
 
     public List<Review> getReviewAllList() {
         return this.reviewRepository.getReviewAllList();
     }
-
+    public List<UserReview> getReviewUserList() {
+        return this.reviewRepository.getReviewUserList();
+    }
     public void remove(Review review) {
         this.reviewRepository.remove(review);
     }
@@ -25,4 +28,12 @@ public class ReviewService {
     public Review getReviewListById(int id) {
         return this.reviewRepository.getReviewListById(id);
     }
+    public boolean isReserved() {
+        return this.reviewRepository.isReserved();
+    }
+
+    public int checkScore() {
+        return this.reviewRepository.checkScore();
+    }
+
 }

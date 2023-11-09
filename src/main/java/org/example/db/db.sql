@@ -44,15 +44,14 @@ SELECT * FROM movie_reservation;
 
 CREATE TABLE review (
 	id int UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	reservation_id int NOT NULL,
+	movieTitle varchar(30) NOT NULL,
 	score int NOT NULL,
 	writing text NOT NULL,
-	user_id varchar(30) NOT NULL,
-	regDate varchar(30) not null
+	regDate varchar(50) not null
 );
 
 SELECT * FROM review;
-
-
 
 
 INSERT INTO `movie`
@@ -91,10 +90,10 @@ join movie on schedule.movie_id = movie.id;
 
 
 SELECT S.*
-  FROM schedule AS S
-  INNER JOIN movie AS M
-  ON S.movie_id = M.id
- Where M.id = 1;
+FROM schedule AS S
+INNER JOIN movie AS M
+ON S.movie_id = M.id
+Where M.id = 1;
 
 select * from movie;
 
@@ -125,3 +124,8 @@ select * from schedule where id = 1;
 select * from schedule;
 
 SELECT * FROM movie_reservation;
+
+
+
+
+
