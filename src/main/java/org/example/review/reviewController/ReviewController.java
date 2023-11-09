@@ -4,6 +4,7 @@ import org.example.Container;
 import org.example.movie.controller.MovieController;
 import org.example.movie.movieService.MovieService;
 import org.example.review.entity.Review;
+import org.example.review.entity.UserReview;
 import org.example.review.reviewService.ReviewService;
 import org.example.ticketing.entity.MovieReservation;
 import org.example.user.entity.User;
@@ -16,26 +17,26 @@ public class ReviewController {
     MovieReservation movieReservation;
     MovieService movieService = new MovieService();
 
-    public void write(int reservation_id) {
+    public void write(int movie_id) {
 
-        if (reviewService.isReserved(reservation_id) == false) {
-            System.out.println("예매를 완료 후 이용해주세요");
-            return;
-        }
+//        if (reviewService.isReserved(reservation_id) == false) {
+//            System.out.println("예매를 완료 후 이용해주세요");
+//            return;
+//        }
 
-        System.out.println(movieService.getMovie(reservation_id).getTitle() + " 리뷰작성");
+        System.out.println(movieService.getMovie(movie_id).getTitle() + " 리뷰작성");
 
         int score = reviewService.checkScore();
         System.out.print("리뷰 내용: ");
         String writing = Container.getSc().nextLine();
 
-        int id = reviewService.create(score,reservation_id , writing, Util.nowDateTime());
+        int id = reviewService.create(score, Container.getLoginedUser().getId(), movieService.getMovie(movie_id).getTitle(), writing, Util.nowDateTime());
         System.out.println(id + "번째 리뷰가 등록되었습니다.");
     }
 
     public void list(int movie_id) {
+
         List<Review> reviewList = reviewService.getReviewAllList();
-//        List<Review> reviewTitleUserList = reviewService.getReviewTitleUserList();
 
         while (true) {
             System.out.println(movieService.getMovie(movie_id).getTitle() + " 게시판");
@@ -46,8 +47,8 @@ public class ReviewController {
                     System.out.println("게시물 번호 / 작성자 / 평점 / 리뷰내용 / 작성일자");
                     for (int i = 0; i < reviewList.size(); i++) {
                         Review review = reviewList.get(i);
-                        if (movie_id == review.getMovie_id()) {
-                            System.out.printf("%d / %s / %d / %s / %s\n", review.getId(), review.getUser_id(), review.getScore(), review.getWriting(), review.getRegDate());
+                        if (movieService.getMovie(movie_id).getTitle().equals(review.getMovieTitle())) {
+                            System.out.printf("%d / %d / %s / %s\n", review.getId(), review.getScore(), review.getWriting(), review.getRegDate());
                         }
                     }
                     break;
@@ -56,18 +57,22 @@ public class ReviewController {
     }
 
     public void remove() {
-        if (reviewService.getReviewUserListById() == null) {
+        if (reviewService.getReviewUserList() == null) {
             System.out.println("작성한 리뷰가 존재하지 않습니다.");
         } else {
             System.out.println("==== 내 리뷰 ====");
-            reviewService.getReviewUserList();
+            List<UserReview> userReviewList = reviewService.getReviewUserList();
+            for(int i = 0; i < userReviewList.size(); i++) {
+                UserReview userReview = userReviewList.get(i);
+                System.out.printf("%d / %s / %d / %s / %s\n", userReview.getId(), userReview.getMovieTitle(), userReview.getScore(), userReview.getWriting(), userReview.getRegDate());
+            }
             System.out.println("삭제할 리뷰의 ID 번호를 입력해주세요");
             int id = Integer.parseInt(Container.getSc().nextLine());
             Review review = reviewService.getReviewListById(id);
             if (review.getId() == 0) {
                 System.out.printf("%d번 리뷰내용이 존재하지 않습니다.\n", id);
                 return;
-            } else if (Container.getLoginedUser().getId()!= review.getUser_id()) {
+            } else if (Container.getLoginedUser().getUser_id().equals(review.getReservation_id()) == false) {
                 System.out.println("다른 사용자의 게시물은 삭제가 불가합니다.");
                 return;
             } else {
@@ -90,7 +95,7 @@ public class ReviewController {
             if (review.getId() == 0) {
                 System.out.printf("%d번 리뷰내용이 존재하지 않습니다.\n", id);
                 return;
-            } else if (Container.getLoginedUser().getId() != review.getUser_id() ) {
+            } else if (Container.getLoginedUser().getUser_id().equals(review.getReservation_id()) == false) {
                 System.out.println("다른 사용자의 게시물은 수정이 불가합니다.");
                 return;
             }

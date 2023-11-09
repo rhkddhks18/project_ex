@@ -125,3 +125,27 @@ select * from schedule where id = 1;
 select * from schedule;
 
 SELECT * FROM movie_reservation;
+
+
+
+
+CREATE TABLE review (
+	id int UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	reservation_id int NOT NULL,
+	movieTitle varchar(30) NOT NULL,
+	score int NOT NULL,
+	writing text NOT NULL,
+	regDate varchar(50) not null
+);
+
+SELECT R.id, R.reservation_id , R.score , R.writing ,R.regDate , R.movieTitle , `user`.name FROM review AS R
+INNER JOIN movie_reservation
+ON R.reservation_id = movie_reservation.id
+INNER JOIN `user`
+ON movie_reservation.user_id = `user`.id;
+-- INNER JOIN schedule
+-- ON movie_reservation.schedule_id = schedule.movie_id
+-- INNER JOIN movie
+-- ON schedule.movie_id = movie.id;
+
+

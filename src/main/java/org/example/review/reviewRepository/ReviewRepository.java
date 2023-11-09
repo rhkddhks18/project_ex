@@ -4,6 +4,7 @@ import org.example.Container;
 import org.example.db.DBConnection;
 import org.example.movie.movieService.MovieService;
 import org.example.review.entity.Review;
+import org.example.review.entity.UserReview;
 import org.example.ticketing.entity.MovieReservation;
 
 import java.util.ArrayList;
@@ -18,11 +19,12 @@ public class ReviewRepository {
     public ReviewRepository () {
         dbConnection = Container.getDBconnection();
     }
-    public int create(int score, int reservation_id, String writing, String regDate) {
+    public int create(int score, int reservation_id, String movie_id, String writing, String regDate) {
         StringBuilder sb = new StringBuilder();
 
         sb.append(String.format("INSERT INTO review "));
         sb.append(String.format("SET score = '%d', ", score));
+        sb.append(String.format("movieTitle = '%s', ", movie_id));
         sb.append(String.format("reservation_id = '%s' , ", reservation_id));
         sb.append(String.format("writing = '%s', ", writing));
         sb.append(String.format("regDate = now(); "));
@@ -36,10 +38,7 @@ public class ReviewRepository {
         List<Review> reviewList = new ArrayList<>();
         StringBuilder sb = new StringBuilder();
 
-        sb.append(String.format("SELECT * "));
-        sb.append(String.format("FROM review "));
-        sb.append(String.format("INNER JOIN movie_reservation "));
-        sb.append(String.format("ON movie_reservation.id = review.reservation_id;"));
+        sb.append(String.format("SELECT * FROM review"));
 
         List<Map<String, Object>> rows = dbConnection.selectRows(sb.toString());
 
@@ -48,18 +47,25 @@ public class ReviewRepository {
         }
         return reviewList;
     }
-    public void getReviewUserList() {
-        List<Review> reviewList = getReviewAllList();
 
-        int user_id = Container.getLoginedUser().getId();
-        System.out.println("게시물 번호 / 작성자 / 평점 / 리뷰 내용 / 영화 제목 / 작성일자");
-        for (int i = 0; i < reviewList.size(); i++) {
-            Review review = reviewList.get(i);
-            if (user_id == review.getUser_id()) {
-                System.out.printf("%d / %s / %d / %s / %s / %s\n", review.getId(), review.getUser_id(), review.getScore(), review.getWriting(), review.getMovie_id(), review.getRegDate());
-            }
+    public List<UserReview> getReviewUserList() {
+        List<UserReview> reviewList = new ArrayList<>();
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(String.format("SELECT R.id, R.reservation_id , R.score , R.writing ,R.regDate , R.movieTitle , `user`.name FROM review AS R "));
+        sb.append(String.format("INNER JOIN movie_reservation "));
+        sb.append(String.format("ON R.reservation_id = movie_reservation.id "));
+        sb.append(String.format("INNER JOIN `user` "));
+        sb.append(String.format("ON movie_reservation.user_id = `user`.id = %d " , Container.getLoginedUser().getId()));
+
+        List<Map<String, Object>> rows = dbConnection.selectRows(sb.toString());
+
+        for (Map<String, Object> row : rows) {
+            reviewList.add(new UserReview(row));
         }
+        return reviewList;
     }
+
 
     public void remove(Review review) {
         int id = review.getId();
@@ -97,12 +103,12 @@ public class ReviewRepository {
 
         return review;
     }
-    public Review getReviewUserListById() {
-        List<Review> reviewList = getReviewAllList();
-        for (int i = 0; i < reviewList.size(); i++) {
-            Review review = reviewList.get(i);
-            if (review.getUser_id() == Container.getLoginedUser().getId()) {
-                return review;
+    public UserReview getReviewUserListById() {
+        List<UserReview> reviewUserList = getReviewUserList();
+        for (int i = 0; i < reviewUserList.size(); i++) {
+            UserReview userReview = reviewUserList.get(i);
+            if (userReview.getName().equals(Container.getLoginedUser().getUser_id())) {
+                return userReview;
             }
         }
         return null;
