@@ -24,7 +24,7 @@ public class ReviewRepository {
 
         sb.append(String.format("INSERT INTO review "));
         sb.append(String.format("SET score = '%d', ", score));
-        sb.append(String.format("movieTitle = '%s', ", movie_id));
+        sb.append(String.format("movie_title = '%s', ", movie_id));
         sb.append(String.format("reservation_id = '%s' , ", reservation_id));
         sb.append(String.format("writing = '%s', ", writing));
         sb.append(String.format("regDate = now(); "));
@@ -38,7 +38,11 @@ public class ReviewRepository {
         List<Review> reviewList = new ArrayList<>();
         StringBuilder sb = new StringBuilder();
 
-        sb.append(String.format("SELECT * FROM review"));
+        sb.append("select r.*, u.name AS userName ");
+        sb.append("from review as r inner join movie_reservation mr ");
+        sb.append("on r.reservation_id = mr.id ");
+        sb.append("inner join `user` u ");
+        sb.append(" on mr.user_id = u.id ;");
 
         List<Map<String, Object>> rows = dbConnection.selectRows(sb.toString());
 
@@ -52,11 +56,11 @@ public class ReviewRepository {
         List<UserReview> reviewList = new ArrayList<>();
         StringBuilder sb = new StringBuilder();
 
-        sb.append(String.format("SELECT R.id, R.reservation_id , R.score , R.writing ,R.regDate , R.movieTitle , `user`.name FROM review AS R "));
-        sb.append(String.format("INNER JOIN movie_reservation "));
-        sb.append(String.format("ON R.reservation_id = movie_reservation.id "));
-        sb.append(String.format("INNER JOIN `user` "));
-        sb.append(String.format("ON movie_reservation.user_id = `user`.id = %d " , Container.getLoginedUser().getId()));
+        sb.append("SELECT R.id, R.reservation_id , R.score , R.writing ,R.regDate , R.movie_title , `user`.name FROM review AS R ");
+        sb.append("INNER JOIN movie_reservation ");
+        sb.append("ON R.reservation_id = movie_reservation.id ");
+        sb.append("INNER JOIN `user` ");
+        sb.append(String.format("ON movie_reservation.user_id = `user`.id  WHERE `user`.id = %d " , Container.getLoginedUser().getId()));
 
         List<Map<String, Object>> rows = dbConnection.selectRows(sb.toString());
 

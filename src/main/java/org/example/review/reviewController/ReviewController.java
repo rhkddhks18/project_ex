@@ -1,13 +1,10 @@
 package org.example.review.reviewController;
 
 import org.example.Container;
-import org.example.movie.controller.MovieController;
 import org.example.movie.movieService.MovieService;
 import org.example.review.entity.Review;
 import org.example.review.entity.UserReview;
 import org.example.review.reviewService.ReviewService;
-import org.example.ticketing.entity.MovieReservation;
-import org.example.user.entity.User;
 import org.example.util.Util;
 
 import java.util.List;
@@ -46,8 +43,8 @@ public class ReviewController {
                     System.out.println("게시물 번호 / 작성자 / 평점 / 리뷰내용 / 작성일자");
                     for (int i = 0; i < reviewList.size(); i++) {
                         Review review = reviewList.get(i);
-                        if (movieService.getMovie(movie_id).getTitle().equals(review.getMovieTitle())) {
-                            System.out.printf("%d / %d / %s / %s\n", review.getId(), review.getScore(), review.getWriting(), review.getRegDate());
+                        if (movieService.getMovie(movie_id).getTitle().equals(review.getMovie_title())) {
+                            System.out.printf("%d / %s / %d / %s / %s\n", review.getId(), review.getUserName(), review.getScore(), review.getWriting(), review.getRegDate());
                         }
                     }
                     break;
@@ -63,7 +60,7 @@ public class ReviewController {
             System.out.println("==== 내 리뷰 ====");
             for(int i = 0; i < userReviewList.size(); i++) {
                 UserReview userReview = userReviewList.get(i);
-                System.out.printf("%d / %s / %d / %s / %s\n", userReview.getId(), userReview.getMovieTitle(), userReview.getScore(), userReview.getWriting(), userReview.getRegDate());
+                System.out.printf("%d / %s / %d / %s / %s\n", userReview.getId(), userReview.getMovie_title(), userReview.getScore(), userReview.getWriting(), userReview.getRegDate());
             }
 
             System.out.println("삭제할 리뷰의 ID 번호를 입력해주세요");
@@ -86,7 +83,7 @@ public class ReviewController {
             System.out.println("==== 내 리뷰 ====");
             for(int i = 0; i < userReviewList.size(); i++) {
                 UserReview userReview = userReviewList.get(i);
-                System.out.printf("%d / %s / %d / %s / %s\n", userReview.getId(), userReview.getMovieTitle(), userReview.getScore(), userReview.getWriting(), userReview.getRegDate());
+                System.out.printf("%d / %s / %d / %s / %s\n", userReview.getId(), userReview.getMovie_title(), userReview.getScore(), userReview.getWriting(), userReview.getRegDate());
             }
             try {
                 System.out.println("수정할 리뷰의 ID 번호를 입력해주세요");

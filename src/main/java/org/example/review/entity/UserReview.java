@@ -14,7 +14,7 @@ public class UserReview {
     private String writing;
     private String regDate;
     private String name;
-    private String movieTitle;
+    private String movie_title;
 
     public UserReview(Map<String, Object> row) {
         this.id = (int)row.get("id");
@@ -22,6 +22,6 @@ public class UserReview {
         this.writing = (String) row.get("writing");
         this.regDate = (String)row.get("regDate");
         this.name = (String)row.get("name");
-        this.movieTitle = (String)row.get("movieTitle");
+        this.movie_title = (String)row.get("movie_title");
     }
 }

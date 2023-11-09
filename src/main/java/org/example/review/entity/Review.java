@@ -21,18 +21,21 @@ public class Review {
     //글(한줄평)
     private String regDate;
 
-    private String movieTitle;
+    private String movie_title;
 
     private String userId;
+
+    private String userName;
 
 
     public Review(Map<String, Object> row) {
         this.id = (int)row.get("id");
         this.score = (int) row.get("score");
-        this.movieTitle = (String) row.get("movieTitle");
+        this.movie_title = (String) row.get("movie_title");
         this.userId = (String) row.get("userId");
         this.writing = (String) row.get("writing");
         this.reservation_id = (int)row.get("reservation_id");
         this.regDate = (String)row.get("regDate");
+        this.userName = (String) row.get("userName");
     }
 }
