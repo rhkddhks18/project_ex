@@ -9,8 +9,6 @@ public class Schedule {
         this.movieTime = movieTime;
     }
 
-
-
     public int getId() {
         return id;
     }

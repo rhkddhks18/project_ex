@@ -3,7 +3,6 @@ package org.example.user.entity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-
 import java.util.Map;
 
 @Getter

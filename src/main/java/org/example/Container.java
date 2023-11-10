@@ -13,6 +13,7 @@ import java.util.Scanner;
 public class Container {
     private static Scanner sc;
     private static DBConnection dbConnection;
+
     @Getter
     @Setter
     private static User loginedUser;
@@ -20,8 +21,10 @@ public class Container {
     @Getter
     @Setter
     private static Movie selectedMovie;
+
     @Getter
     private static LocalDate nowDate = LocalDate.now();
+
     @Getter
     private static LocalTime nowTime = java.time.LocalTime.now();
 

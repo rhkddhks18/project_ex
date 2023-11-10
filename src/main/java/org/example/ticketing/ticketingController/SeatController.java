@@ -5,7 +5,6 @@ import org.example.ticketing.entity.MovieReservation;
 import org.example.ticketing.entity.Schedule;
 import org.example.ticketing.entity.Seat;
 import org.example.ticketing.ticketingService.MovieReservationService;
-
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -15,7 +14,7 @@ public class SeatController {
     public MovieReservation seat(Schedule time) {
         int seat_x = 0;
         int seat_y = 0;
-        Scanner sc = new Scanner(System.in);
+        Scanner sc = Container.getSc();
 
         MovieReservationService movieReservationService = new MovieReservationService();
         int seatX = 7;

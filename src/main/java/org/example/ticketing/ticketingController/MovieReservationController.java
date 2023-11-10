@@ -4,7 +4,6 @@ import org.example.Container;
 import org.example.ticketing.entity.MovieReservation;
 import org.example.ticketing.entity.Schedule;
 import org.example.ticketing.ticketingService.MovieReservationService;
-
 import java.util.Scanner;
 
 public class MovieReservationController {

@@ -3,7 +3,6 @@ package org.example.ticketing.ticketingRepository;
 import org.example.Container;
 import org.example.db.DBConnection;
 import org.example.ticketing.entity.Schedule;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -13,7 +12,6 @@ public class ScheduleRepository {
     public ScheduleRepository() {
         dbConnection = Container.getDBconnection();
     }
-
 
     public List<Schedule> getAllSchedules() {
         List<Schedule> schedules = new ArrayList<>();

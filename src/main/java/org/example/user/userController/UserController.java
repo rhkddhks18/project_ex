@@ -2,7 +2,6 @@ package org.example.user.userController;
 
 import org.example.Container;
 import org.example.user.userService.UserService;
-
 import java.util.Scanner;
 
 public class UserController {
@@ -97,7 +96,6 @@ public class UserController {
         }
 
         userService.sign(userId, userPW, userName, userBirth, email);
-
         System.out.println("회원가입이 완료되었습니다!");
     }
 

@@ -13,7 +13,6 @@ public class Seat {
         this.reserved = reserved;
     }
 
-
     public boolean isReserved() {
         return reserved;
     }

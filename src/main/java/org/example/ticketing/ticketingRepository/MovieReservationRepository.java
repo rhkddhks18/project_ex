@@ -3,22 +3,11 @@ package org.example.ticketing.ticketingRepository;
 import org.example.Container;
 import org.example.ticketing.entity.MovieReservation;
 import org.example.ticketing.entity.Schedule;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class MovieReservationRepository {
-
-//    public void seat(int seatX, int seatY, Schedule time) {
-//        StringBuilder sb = new StringBuilder();
-//        sb.append("INSERT INTO movie_reservation");
-//        sb.append(String.format("SET user_id = '%s',", Container.getLoginedUser().getId()));
-//        sb.append(String.format("seat_y = '%s',", seatY));
-//        sb.append(String.format("seat_x = '%s',", seatX));
-//
-//        Container.getDBconnection().insert(sb.toString());
-//    }1123123123dd123g
 
     public List<MovieReservation> getReservatedSeat(Schedule time) {
         StringBuilder sb = new StringBuilder();
